@@ -11,3 +11,6 @@
 ehthumbs.db
 Thumbs.db
 *.lnk
+references/
+res/
+sprites/
