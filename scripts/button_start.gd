@@ -13,6 +13,6 @@ func _ready():
 
 func _on_Button_pressed():
 	print ("Hello")
-	transition.fade_to("res://stages/game.tscn")
+	Transition.fade_to("res://stages/game.tscn")
 	
 	pass # replace with function body

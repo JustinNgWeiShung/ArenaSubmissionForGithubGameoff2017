@@ -14,10 +14,18 @@ func _ready():
 
 func _process(delta):
 	# tracking mouse
-	var motion = (get_global_mouse_pos().x-get_pos().x) *0.2
-	translate(Vector2(motion,0));
+	#var motion = (get_global_mouse_pos().x-get_pos().x) *0.2
+	#translate(Vector2(motion,0));
+	
+	if(Input.is_action_pressed("P1_MOVE_RIGHT")):
+		var curPos = get_pos()
+		curPos.x+= 100*delta
+		set_pos(curPos);
+		
+	
 	
 	# clamping to view
+	# i.e. cannot walk out of view
 	var view_size = get_viewport_rect().size
 	var pos = get_pos()
 	pos.x = clamp(pos.x,0+16, view_size.width-16)

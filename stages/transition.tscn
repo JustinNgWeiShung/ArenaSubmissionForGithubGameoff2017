@@ -32,7 +32,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="transition" type="CanvasLayer"]
+[node name="Transition" type="CanvasLayer"]
 
 layer = 10
 offset = Vector2( 0, 0 )
