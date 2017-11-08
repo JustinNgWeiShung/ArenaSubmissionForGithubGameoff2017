@@ -10,8 +10,7 @@ func _ready():
 	pass
 	
 
-
-func _on_Button_pressed():
+func _on_p2Button_pressed():
 	print ("Hello")
 	Transition.fade_to("res://stages/game.tscn")
 	

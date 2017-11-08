@@ -22,8 +22,11 @@ func _process(delta):
 		curPos.x+= 100*delta
 		set_pos(curPos);
 		
-	
-	
+	if(Input.is_action_pressed("P1_MOVE_LEFT")):
+		var curPos = get_pos()
+		curPos.x-= 100*delta
+		set_pos(curPos);
+		
 	# clamping to view
 	# i.e. cannot walk out of view
 	var view_size = get_viewport_rect().size
