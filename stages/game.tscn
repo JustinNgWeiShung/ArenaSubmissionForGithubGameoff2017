@@ -11,11 +11,12 @@ script/script = ExtResource( 1 )
 
 [node name="p1" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 230.814, 496.005 )
+transform/pos = Vector2( 198.893, 464.084 )
 script/script = ExtResource( 3 )
 
 [node name="p2" parent="." instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 660.522, 503.372 )
+transform/pos = Vector2( 658.067, 464.084 )
+transform/scale = Vector2( -1, 1 )
 
 

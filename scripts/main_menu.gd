@@ -10,6 +10,7 @@ func _ready():
 
 	
 func _process(delta):
+	
 	if(Input.is_key_pressed(KEY_ESCAPE)):
 		if(Input.is_key_pressed(KEY_SHIFT)):
 			get_tree().quit()
