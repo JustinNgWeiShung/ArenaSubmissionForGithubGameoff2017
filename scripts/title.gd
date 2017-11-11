@@ -22,14 +22,24 @@ func _input(event):
 		currentText = callToActionText1
 	
 func _process(delta):
+	_effectCheck()
+	
 	#check if a button is pressed on keyboard
 	#or gamepad
 	if(Input.is_action_pressed("ui_accept")):
-		Transition.fade_to("res://stages/main_menu.tscn");
+		TRANSITION.fade_to("res://stages/main_menu.tscn");
 		transitionLock=true;
 		
 	callToActionNode.set_text(currentText)
 	
-	get_node("/root/globals").quitGame();
+	get_node("/root/GLOBAL_INPUT").quitGame();
 	
 	pass
+
+func _effectCheck():
+	GLOBAL_INPUT.changeEffect();
+	
+	if(GLOBAL_SYS.effect == 0):
+		get_node("overlay").hide()
+	else:
+		get_node("overlay").show()

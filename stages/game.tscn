@@ -30,6 +30,4 @@ transform/pos = Vector2( 658.067, 464.084 )
 
 [node name="overlay" parent="." instance=ExtResource( 4 )]
 
-visibility/visible = false
-
 

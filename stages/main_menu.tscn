@@ -93,8 +93,6 @@ script/script = ExtResource( 5 )
 
 [node name="overlay" parent="." instance=ExtResource( 6 )]
 
-visibility/visible = false
-
 [node name="animplayer" type="AnimationPlayer" parent="."]
 
 playback/process_mode = 1

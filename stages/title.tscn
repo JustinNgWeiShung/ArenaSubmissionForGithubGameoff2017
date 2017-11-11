@@ -97,8 +97,6 @@ max_lines_visible = -1
 
 [node name="overlay" parent="." instance=ExtResource( 4 )]
 
-visibility/visible = false
-
 [node name="animplayer" type="AnimationPlayer" parent="."]
 
 playback/process_mode = 1

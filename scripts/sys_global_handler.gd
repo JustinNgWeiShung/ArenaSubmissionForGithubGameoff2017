@@ -1,8 +1,10 @@
+# Global System functions
 extends Node
 
 var currentScene = null
-
 var PlayerName = "Mike"
+
+var effect = 0;
 
 func getPlayerName():
 	return PlayerName;
@@ -16,8 +18,8 @@ func setScene(scenePath):
 	var s = ResourceLoader.load(scenePath)
 	currentScene = s.instance()
 	get_tree().get_root().add_child(currentScene)
-	
-func quitGame():
-	if(Input.is_key_pressed(KEY_ESCAPE)):
-		if(Input.is_key_pressed(KEY_SHIFT)):
-			get_tree().quit()
+
+func changeEffect():
+	effect+=1;
+	if(effect>2):
+		effect=0;

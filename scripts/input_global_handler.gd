@@ -1,10 +1,16 @@
+# Global input checks e.g. quit game function
 extends Node
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+var lockZ=false;
 
-func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
+func quitGame():
+	if(Input.is_key_pressed(KEY_ESCAPE)):
+		if(Input.is_key_pressed(KEY_SHIFT)):
+			get_tree().quit()
+
+func changeEffect():
+	if(Input.is_key_pressed(KEY_Z) && not lockZ):
+		GLOBAL_SYS.changeEffect()
+		print(GLOBAL_SYS.effect)
+	
+	lockZ=Input.is_key_pressed(KEY_Z);

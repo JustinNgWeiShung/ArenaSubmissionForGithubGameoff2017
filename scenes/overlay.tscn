@@ -76,10 +76,10 @@ COLOR = colorize(to_grayscale(pixel_color));",
 
 shader/shader = SubResource( 1 )
 shader/shading_mode = 0
-shader_param/color_1 = Color( 0.0705882, 0.0901961, 0.0862745, 1 )
-shader_param/color_2 = Color( 0.152941, 0.172549, 0.145098, 1 )
-shader_param/color_3 = Color( 0.294118, 0.313726, 0.247059, 1 )
-shader_param/color_4 = Color( 0.505882, 0.529412, 0.407843, 1 )
+shader_param/color_1 = Color( 0.150146, 0.15781, 0.640625, 1 )
+shader_param/color_2 = Color( 0.331299, 0.446323, 0.71875, 1 )
+shader_param/color_3 = Color( 0.621094, 0.81842, 0.828125, 1 )
+shader_param/color_4 = Color( 0.851563, 0.851563, 0.851563, 1 )
 shader_param/offset = 0.5
 
 [sub_resource type="CanvasItemShader" id=3]

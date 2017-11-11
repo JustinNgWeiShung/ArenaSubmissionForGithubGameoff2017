@@ -11,5 +11,6 @@ func _ready():
 	
 
 func _on_p1Button_pressed():
-	Transition.fade_to("res://stages/game.tscn")
+	print ("P1 Selected")
+	TRANSITION.fade_to("res://stages/game.tscn")
 	pass # replace with function body
