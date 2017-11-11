@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://res/1x1.png" type="Texture" id=1]
+
+[sub_resource type="CanvasItemShader" id=1]
+
+_code = {
+"fragment": " 
+// Get pixel color from screen
+color pixel_color = vec4(texscreen(SCREEN_UV), 1);
+uniform float tolerance = 0.1;
+uniform color input_color=vec4(0,0,0,1);
+uniform color output_color=vec4(1,1,1,1);
+
+vec4 change_color(vec4 pixelcolor){
+	color new_color;
+	if(pixelcolor.r >= input_color.r-tolerance && pixelcolor.r <= input_color.r+tolerance &&
+	pixelcolor.b >= input_color.b-tolerance && pixelcolor.b <= input_color.b+tolerance &&
+	pixelcolor.g >= input_color.g-tolerance  && pixelcolor.g <= input_color.g+tolerance){
+		new_color.r = output_color.r;
+		new_color.g = output_color.g;
+		new_color.b = output_color.b;
+		new_color.a = pixelcolor.a;
+	}
+	return new_color;
+}
+
+// Set the pixel color we are going to use
+COLOR = change_color(pixel_color);",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=2]
+
+shader/shader = SubResource( 1 )
+shader/shading_mode = 0
+shader_param/tolerance = 0.1
+shader_param/input_color = Color( 0.494118, 0.792157, 0.698039, 1 )
+shader_param/output_color = Color( 0.181641, 0.190155, 0.726563, 1 )
+
+[node name="recolorshader" type="Node2D"]
+
+[node name="buffer1" type="BackBufferCopy" parent="."]
+
+copy_mode = 2
+rect = Rect2( -100, -100, 200, 200 )
+
+[node name="recolorshader" type="TextureFrame" parent="buffer1"]
+
+material/material = SubResource( 2 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -100.0
+margin/top = -100.0
+margin/right = 100.0
+margin/bottom = 100.0
+texture = ExtResource( 1 )
+stretch_mode = 2
+
+

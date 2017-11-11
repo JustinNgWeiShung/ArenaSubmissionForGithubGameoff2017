@@ -27,7 +27,5 @@ func _process(delta):
 		
 		get_node("/root/globals").setScene("res://stages/main_menu.tscn");
 			
-	if(Input.is_key_pressed(KEY_ESCAPE)):
-		if(Input.is_key_pressed(KEY_SHIFT)):
-			get_tree().quit()
+	get_node("/root/globals").quitGame();
 	pass

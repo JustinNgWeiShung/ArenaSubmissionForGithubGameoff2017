@@ -1,0 +1,160 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://res/1x1.png" type="Texture" id=1]
+[ext_resource path="res://res/grid_pattern.png" type="Texture" id=2]
+
+[sub_resource type="CanvasItemShader" id=1]
+
+_code = {
+"fragment": "// Colors that we will use
+uniform color color_1 = vec4(0.784313725, 0.788235294, 0.262745098,1);
+uniform color color_2 = vec4(0.490196078, 0.521568627, 0.152941176, 1);
+uniform color color_3 = vec4(0, 0.415686275, 0, 1);
+uniform color color_4 = vec4(0.015686275, 0.243137255, 0, 1);
+ 
+// Color offset - changes threshold for color adjustments
+uniform float offset = 0.5;
+ 
+// Get pixel color from screen
+color pixel_color = vec4(texscreen(SCREEN_UV), 1);
+ 
+// Function to covert a pixel color into grayscale
+vec4 to_grayscale(vec4 pixcol)
+{
+    float average = (pixcol.r + pixcol.g + pixcol.b) / 3;
+    return vec4(average, average, average, 1);
+}
+ 
+// Colorizes the grayscale pixel
+vec4 colorize(vec4 grayscale)
+{
+    // The color we will return
+    color new_color;
+     
+    // Color greater than 0 in value?
+    if(grayscale.r > 0)
+    {
+        // Set darkest color 4
+        new_color = color_4;
+                 
+        // Color greater than (default) 0.25 in value? 
+        if(grayscale.r > offset * 0.5)
+        {
+            // Set dark color 3
+            new_color = color_3;
+             
+            // Color greater than (default) 0.50 in value? 
+            if(grayscale.r > offset)
+            {
+                // Set bright color 2
+                new_color = color_2;
+                 
+                // Color greater than (default) 0.75 in value? 
+                if(grayscale.r > offset * 1.5)
+                {
+                    // Set brightest color 1
+                    new_color = color_1;
+                }
+            }
+        }
+    }
+     
+    // Return the new color
+    return new_color;
+}
+ 
+// Set the pixel color we are going to use
+COLOR = colorize(to_grayscale(pixel_color));",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=2]
+
+shader/shader = SubResource( 1 )
+shader/shading_mode = 0
+shader_param/color_1 = Color( 0.0705882, 0.0901961, 0.0862745, 1 )
+shader_param/color_2 = Color( 0.152941, 0.172549, 0.145098, 1 )
+shader_param/color_3 = Color( 0.294118, 0.313726, 0.247059, 1 )
+shader_param/color_4 = Color( 0.505882, 0.529412, 0.407843, 1 )
+shader_param/offset = 0.5
+
+[sub_resource type="CanvasItemShader" id=3]
+
+_code = {
+"fragment": "// Brightness (less than 1 is darker, above 1 is brighter)
+uniform float brightness = 1.13;
+ 
+// Get pixel color from screen
+color pixel_color = vec4(texscreen(SCREEN_UV), 1);
+ 
+// Get pixel color from texture (set on the TextureFrame)
+vec4 grid_pixel_color = tex(TEXTURE, UV);
+ 
+// If the pixel color from our grid image is dark, set it to be fully transparent
+if(grid_pixel_color.r < 0.5)
+{
+    COLOR = vec4(1,1,1,0); // (red, green, blue, alpha-transparency)
+}
+// Since it is NOT dark, we adjust the pixel color brightness
+else
+{
+    COLOR = pixel_color * brightness;
+}",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=4]
+
+shader/shader = SubResource( 3 )
+shader/shading_mode = 0
+shader_param/brightness = 1.13
+
+[node name="overlay" type="Node2D"]
+
+[node name="color" type="BackBufferCopy" parent="."]
+
+copy_mode = 0
+rect = Rect2( -100, -100, 200, 200 )
+
+[node name="4colorshader" type="TextureFrame" parent="color"]
+
+material/material = SubResource( 2 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 960.0
+margin/bottom = 540.0
+texture = ExtResource( 1 )
+stretch_mode = 2
+
+[node name="viewport" type="BackBufferCopy" parent="."]
+
+copy_mode = 2
+rect = Rect2( -100, -100, 200, 200 )
+
+[node name="gameboygridshader" type="TextureFrame" parent="viewport"]
+
+material/material = SubResource( 4 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 960.0
+margin/bottom = 540.0
+texture = ExtResource( 2 )
+stretch_mode = 2
+
+

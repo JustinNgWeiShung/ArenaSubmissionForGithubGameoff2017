@@ -17,4 +17,7 @@ func setScene(scenePath):
 	currentScene = s.instance()
 	get_tree().get_root().add_child(currentScene)
 	
-	
+func quitGame():
+	if(Input.is_key_pressed(KEY_ESCAPE)):
+		if(Input.is_key_pressed(KEY_SHIFT)):
+			get_tree().quit()
