@@ -26,13 +26,14 @@ func _process(delta):
 	
 	#check if a button is pressed on keyboard
 	#or gamepad
+	
 	if(Input.is_action_pressed("ui_accept")):
-		TRANSITION.fade_to(get_node("/root/GLOBAL_SYS").CHAR_SELECT_SCENE_NAME);
+		TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME);
 		transitionLock=true;
 		
 	callToActionNode.set_text(currentText)
 	
-	get_node("/root/GLOBAL_INPUT").quitGame();
+	GLOBAL_INPUT.quitGame();
 	
 	pass
 

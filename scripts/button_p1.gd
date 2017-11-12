@@ -17,4 +17,5 @@ func _on_p1Button_pressed():
 	
 func pressed():
 	print ("P1 Selected")
-	TRANSITION.fade_to(get_node("/root/GLOBAL_SYS").GAME_SCENE_NAME)
+	GLOBAL_SYS.p1_char=GLOBAL_SYS.P1CHAR;
+	TRANSITION.fade_to(GLOBAL_SYS.GAME_SCENE_NAME)

@@ -15,7 +15,7 @@ func _ready():
 func _input(event):
 	if(event.type == InputEvent.MOUSE_BUTTON):
 		if(event.button_index == BUTTON_RIGHT):
-			var name = get_node("/root/GLOBAL_SYS").getPlayerName();
+			var name = GLOBAL_SYS.getPlayerName();
 			print(name);
 			var power = Globals.get("MAX_POWER_LEVEL");
 			print(power);
@@ -27,12 +27,12 @@ func _process(delta):
 	
 	if(Input.is_key_pressed(KEY_M) && !stageLock):
 		print("Test M")
-		get_node("/root/GLOBAL_SYS").currentScene = get_tree().get_root().get_child(get_tree().get_root().get_child_count()-1);
-		get_node("/root/GLOBAL_SYS").setScene(get_node("/root/GLOBAL_SYS").CHAR_SELECT_SCENE_NAME);
+		GLOBAL_SYS.currentScene = get_tree().get_root().get_child(get_tree().get_root().get_child_count()-1);
+		GLOBAL_SYS.setScene(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME);
 	
 	stageLock=Input.is_key_pressed(KEY_M)
 	
-	get_node("/root/GLOBAL_INPUT").quitGame();
+	GLOBAL_INPUT.quitGame();
 	pass
 
 func _effectCheck():

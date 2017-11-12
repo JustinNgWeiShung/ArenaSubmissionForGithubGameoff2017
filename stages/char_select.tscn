@@ -125,9 +125,9 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "Blinking Selection Box"
 
-[connection signal="pressed" from="p1Button" to="p1Button" method="_on_Button_pressed"]
-
 [connection signal="pressed" from="p1Button" to="p1Button" method="_on_p1Button_pressed"]
+
+[connection signal="pressed" from="p1Button" to="p1Button" method="_on_Button_pressed"]
 
 [connection signal="pressed" from="p2Button" to="p2Button" method="_on_p2Button_pressed"]
 

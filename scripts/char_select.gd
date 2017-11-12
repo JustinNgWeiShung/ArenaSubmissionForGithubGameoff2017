@@ -27,7 +27,7 @@ func _process(delta):
 	_effectCheck()
 	_playerInputCheck()
 	
-	get_node("/root/GLOBAL_INPUT").quitGame();
+	GLOBAL_INPUT.quitGame();
 	#if(Input.is_mouse_button_pressed(BUTTON_LEFT)):
 		#print(str("Mouse Button pressed at: ", get_global_mouse_pos()));
 		

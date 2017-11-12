@@ -6,6 +6,9 @@ var PlayerName = "Mike"
 var CHAR_SELECT_SCENE_NAME="res://stages/char_select.tscn"
 var TITLE_SCENE_NAME="res://stages/title.tscn"
 var GAME_SCENE_NAME="res://stages/game.tscn"
+var P1CHAR="p1"
+var P2CHAR="p2"
+var p1_char="p1"
 
 var effect = 0;
 
@@ -24,5 +27,5 @@ func setScene(scenePath):
 
 func changeEffect():
 	effect+=1;
-	if(effect>2):
+	if(effect>1):
 		effect=0;

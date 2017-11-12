@@ -12,4 +12,4 @@ func _on_p2Button_pressed():
 
 func pressed():
 	print ("P2 Selected")
-	TRANSITION.fade_to(get_node("/root/GLOBAL_SYS").GAME_SCENE_NAME)
+	TRANSITION.fade_to(GLOBAL_SYS.GAME_SCENE_NAME)
