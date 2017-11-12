@@ -11,6 +11,10 @@ func _ready():
 	
 
 func _on_p1Button_pressed():
-	print ("P1 Selected")
-	TRANSITION.fade_to("res://stages/game.tscn")
+	pressed()
+	
 	pass # replace with function body
+	
+func pressed():
+	print ("P1 Selected")
+	TRANSITION.fade_to(get_node("/root/GLOBAL_SYS").GAME_SCENE_NAME)

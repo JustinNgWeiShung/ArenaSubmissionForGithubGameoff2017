@@ -3,6 +3,9 @@ extends Node
 
 var currentScene = null
 var PlayerName = "Mike"
+var CHAR_SELECT_SCENE_NAME="res://stages/char_select.tscn"
+var TITLE_SCENE_NAME="res://stages/title.tscn"
+var GAME_SCENE_NAME="res://stages/game.tscn"
 
 var effect = 0;
 

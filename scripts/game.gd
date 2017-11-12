@@ -3,6 +3,7 @@ extends Node2D
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
+var stageLock=false
 
 func _ready():
 	set_process(true);
@@ -24,11 +25,13 @@ func _input(event):
 func _process(delta):
 	_effectCheck()
 	
-	if(Input.is_key_pressed(KEY_Z)):
+	if(Input.is_key_pressed(KEY_M) && !stageLock):
+		print("Test M")
 		get_node("/root/GLOBAL_SYS").currentScene = get_tree().get_root().get_child(get_tree().get_root().get_child_count()-1);
-		
-		get_node("/root/GLOBAL_SYS").setScene("res://stages/main_menu.tscn");
-			
+		get_node("/root/GLOBAL_SYS").setScene(get_node("/root/GLOBAL_SYS").CHAR_SELECT_SCENE_NAME);
+	
+	stageLock=Input.is_key_pressed(KEY_M)
+	
 	get_node("/root/GLOBAL_INPUT").quitGame();
 	pass
 

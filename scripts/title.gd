@@ -27,7 +27,7 @@ func _process(delta):
 	#check if a button is pressed on keyboard
 	#or gamepad
 	if(Input.is_action_pressed("ui_accept")):
-		TRANSITION.fade_to("res://stages/main_menu.tscn");
+		TRANSITION.fade_to(get_node("/root/GLOBAL_SYS").CHAR_SELECT_SCENE_NAME);
 		transitionLock=true;
 		
 	callToActionNode.set_text(currentText)

@@ -1,9 +1,5 @@
 extends TextureButton
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -11,7 +7,9 @@ func _ready():
 	
 
 func _on_p2Button_pressed():
+	pressed()
+	pass
+
+func pressed():
 	print ("P2 Selected")
-	TRANSITION.fade_to("res://stages/game.tscn")
-	
-	pass # replace with function body
+	TRANSITION.fade_to(get_node("/root/GLOBAL_SYS").GAME_SCENE_NAME)

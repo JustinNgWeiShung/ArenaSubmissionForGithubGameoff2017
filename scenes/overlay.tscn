@@ -76,10 +76,10 @@ COLOR = colorize(to_grayscale(pixel_color));",
 
 shader/shader = SubResource( 1 )
 shader/shading_mode = 0
-shader_param/color_1 = Color( 0.150146, 0.15781, 0.640625, 1 )
-shader_param/color_2 = Color( 0.331299, 0.446323, 0.71875, 1 )
-shader_param/color_3 = Color( 0.621094, 0.81842, 0.828125, 1 )
-shader_param/color_4 = Color( 0.851563, 0.851563, 0.851563, 1 )
+shader_param/color_1 = Color( 0.713968, 0.898438, 0.491333, 0.508196 )
+shader_param/color_2 = Color( 0.64576, 0.828125, 0.562866, 0.486353 )
+shader_param/color_3 = Color( 0.802307, 0.859375, 0.644531, 0.366118 )
+shader_param/color_4 = Color( 0.851563, 0.824535, 0.718506, 1 )
 shader_param/offset = 0.5
 
 [sub_resource type="CanvasItemShader" id=3]
@@ -126,6 +126,7 @@ rect = Rect2( -100, -100, 200, 200 )
 
 [node name="4colorshader" type="TextureFrame" parent="color"]
 
+visibility/visible = false
 material/material = SubResource( 2 )
 focus/ignore_mouse = true
 focus/stop_mouse = true
