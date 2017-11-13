@@ -6,7 +6,7 @@
 [sub_resource type="Animation" id=1]
 
 resource/name = "transition"
-length = 2.0
+length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -14,7 +14,7 @@ tracks/0/path = NodePath("TextureFrame:modulate")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 1, 2 ),
+"times": FloatArray( 0, 0.8, 1.5 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -24,7 +24,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
-"times": FloatArray( 1 ),
+"times": FloatArray( 0.8 ),
 "transitions": FloatArray( 1 ),
 "values": [ {
 "args": [  ],

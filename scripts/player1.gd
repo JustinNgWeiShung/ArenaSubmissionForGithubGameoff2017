@@ -1,10 +1,6 @@
 # script player
 
-extends Area2D
-
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+extends KinematicBody2D
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -16,17 +12,17 @@ func _process(delta):
 	# tracking mouse
 	#var motion = (get_global_mouse_pos().x-get_pos().x) *0.2
 	#translate(Vector2(motion,0));
-	
+	var direction = Vector2(0,0)
 	if(Input.is_action_pressed("P1_MOVE_RIGHT")):
-		var curPos = get_pos()
-		curPos.x+= 100*delta
-		set_pos(curPos);
-		
+		direction += Vector2(1,0)
 	if(Input.is_action_pressed("P1_MOVE_LEFT")):
-		var curPos = get_pos()
-		curPos.x-= 100*delta
-		set_pos(curPos);
-		
+		direction += Vector2(-1,0)
+	if(Input.is_action_pressed("P1_MOVE_UP")):
+		direction += Vector2(0,-1)
+	if(Input.is_action_pressed("P1_MOVE_DOWN")):
+		direction += Vector2(0,1)
+	move( direction * 100 * delta)
+	
 	# clamping to view
 	# i.e. cannot walk out of view
 	var view_size = get_viewport_rect().size
@@ -35,7 +31,6 @@ func _process(delta):
 	
 	pass
 
-#
 #func _process(delta):
 #    var p1_pos = get_node("p1/char").get_pos()
 #    var p2_pos = get_node("p2/char").get_pos()

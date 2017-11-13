@@ -1,18 +1,24 @@
-extends Node2D
+extends Control
 
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
 var stageLock=false
+var p1BarNode
+var p2BarNode
+var timer = 0.0
 
 func _ready():
 	set_process(true);
 	set_process_input(true);
+	p1BarNode=get_node("p1VBox/p1Bar")
+	p2BarNode=get_node("p2VBox/p2Bar")
 	# Called every time the node is added to the scene.
 	# Initialization here
 	pass
 	
 func _input(event):
+	
 	if(event.type == InputEvent.MOUSE_BUTTON):
 		if(event.button_index == BUTTON_RIGHT):
 			var name = GLOBAL_SYS.getPlayerName();
@@ -23,6 +29,24 @@ func _input(event):
 	pass
 		
 func _process(delta):
+	
+	timer += delta
+	if timer >= 1.0:
+		timer = 0.0
+		var value = p1BarNode.get_value()
+		p1BarNode.set_value(value-1)
+		
+		if (value - 1) == 0:
+			p1BarNode.set_value(100);
+			
+		var value2 = p2BarNode.get_value()
+		p2BarNode.set_value(value2-1)
+		
+		if (value2 - 1) == 0:
+			p2BarNode.set_value(100);
+	
+	
+	
 	_effectCheck()
 	
 	if(Input.is_key_pressed(KEY_M) && !stageLock):
@@ -42,3 +66,4 @@ func _effectCheck():
 		get_node("overlay").hide()
 	else:
 		get_node("overlay").show()
+		
