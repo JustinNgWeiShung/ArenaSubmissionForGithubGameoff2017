@@ -7,14 +7,19 @@ var stageLock=false
 var p1BarNode
 var p2BarNode
 var timer = 0.0
+var ceilNode
 
 func _ready():
 	set_process(true);
 	set_process_input(true);
 	p1BarNode=get_node("p1VBox/p1Bar")
 	p2BarNode=get_node("p2VBox/p2Bar")
-	# Called every time the node is added to the scene.
-	# Initialization here
+	
+	ceilNode=get_node("ceil1/collisionShape2d")
+	
+	#To disable ceiling
+	ceilNode.set_trigger(true)
+
 	pass
 	
 func _input(event):
