@@ -8,8 +8,22 @@ var p1BarNode
 var p2BarNode
 var timer = 0.0
 var ceilNode
+var IO_SCRIPT
+var game_input
+var STATE_HANDLER_SCRIPT
+var game_state
+
 
 func _ready():
+	IO_SCRIPT = load("res://scripts/game/io_handler.gd")
+	game_input = IO_SCRIPT.new()
+	game_input.test()
+	
+	STATE_HANDLER_SCRIPT = load("res://scripts/game/state_handler.gd")
+	game_state = STATE_HANDLER_SCRIPT.new()
+	game_state.test()
+	
+	
 	set_process(true);
 	set_process_input(true);
 	p1BarNode=get_node("p1VBox/p1Bar")
@@ -49,8 +63,6 @@ func _process(delta):
 		
 		if (value2 - 1) == 0:
 			p2BarNode.set_value(100);
-	
-	
 	
 	_effectCheck()
 	
