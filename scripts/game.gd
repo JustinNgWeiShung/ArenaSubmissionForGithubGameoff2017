@@ -12,7 +12,8 @@ var IO_SCRIPT
 var game_input
 var STATE_HANDLER_SCRIPT
 var game_state
-
+var p1
+var ceilNodePos
 
 func _ready():
 	IO_SCRIPT = load("res://scripts/game/io_handler.gd")
@@ -23,17 +24,20 @@ func _ready():
 	game_state = STATE_HANDLER_SCRIPT.new()
 	game_state.test()
 	
+	p1=get_node("Player1")
 	
-	set_process(true);
-	set_process_input(true);
 	p1BarNode=get_node("p1VBox/p1Bar")
 	p2BarNode=get_node("p2VBox/p2Bar")
 	
 	ceilNode=get_node("ceil1/collisionShape2d")
-	
+	ceilNodePos = ceilNode.get_pos()
 	#To disable ceiling
-	ceilNode.set_trigger(true)
-
+	ceilNode.set_trigger(false)
+	
+	
+	set_process(true);
+	set_process_input(true);
+	
 	pass
 	
 func _input(event):
@@ -48,6 +52,8 @@ func _input(event):
 	pass
 		
 func _process(delta):
+	
+	
 	
 	timer += delta
 	if timer >= 1.0:

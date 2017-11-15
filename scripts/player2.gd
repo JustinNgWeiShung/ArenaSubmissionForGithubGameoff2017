@@ -1,5 +1,3 @@
-# script player
-
 extends KinematicBody2D
 
 var height=0
@@ -11,6 +9,7 @@ var runSpeed = 300
 var groundCollider
 
 func _ready():
+	
 	groundCollider = get_node("groundCollider")
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -18,18 +17,8 @@ func _ready():
 	pass
 
 func _process(delta):
-	# tracking mouse
-	#var motion = (get_global_mouse_pos().x-get_pos().x) *0.2
-	#translate(Vector2(motion,0));
 	var direction = Vector2(0,0)
-	if(Input.is_action_pressed("P1_MOVE_RIGHT")):
-		direction += Vector2(1,0)
-	if(Input.is_action_pressed("P1_MOVE_LEFT")):
-		direction += Vector2(-1,0)
-	if(Input.is_action_pressed("P1_MOVE_UP")):
-		direction += Vector2(0,-1)
-	if(Input.is_action_pressed("P1_MOVE_DOWN")):
-		direction += Vector2(0,1)
+	direction += Vector2(0,1)
 	move( direction * walkSpeed * delta)
 	
 	if(Input.is_action_pressed("P1_JUMP")):
@@ -58,28 +47,18 @@ func _process(delta):
 	var pos = get_pos()
 	pos.x = clamp(pos.x,0+16, view_size.width-16)
 	
-	pass
-
 func _is_jumping():
 	if(height>0):
 		return true
 	else:
 		return false
-
-#func _process(delta):
-#    var p1_pos = get_node("p1/char").get_pos()
-#    var p2_pos = get_node("p2/char").get_pos()
-#    var center_pos = Vector2(p1_pos.x + ((p2_pos.x - p1_pos.x) / 2), 200)
-#    get_node("screen_center").set_pos(center_pos)
+		
+func _on_hitbox_area_enter( area ):
+	print("something enter hitbox")
+	print(area.get_name())
+	pass # replace with function body
 
 
 func _on_hurtbox_area_enter( area ):
-	print("something enter hurtbox")
-	print(area.get_name())
-	var test=area.get_parent()
-	print(test.get_name())
-	pass # replace with function body\
-
-func _on_hitbox_area_enter( area ):
-	# Enemy enter hitbox
+	
 	pass # replace with function body

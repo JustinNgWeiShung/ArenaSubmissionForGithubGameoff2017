@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://res/background.jpg" type="Texture" id=2]
 [ext_resource path="res://res/bottom.png" type="Texture" id=3]
 [ext_resource path="res://res/top.png" type="Texture" id=4]
 [ext_resource path="res://res/over.png" type="Texture" id=5]
-[ext_resource path="res://scenes/overlay.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/player1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/player1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/player2.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/wall.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/overlay.tscn" type="PackedScene" id=9]
 
 [node name="World" type="Control"]
 
@@ -130,33 +131,45 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="overlay" parent="." instance=ExtResource( 6 )]
+[node name="YSort" type="YSort" parent="."]
 
-visibility/visible = false
+sort/enabled = true
 
-[node name="Player1" parent="." instance=ExtResource( 7 )]
+[node name="Player1" parent="YSort" instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 140, 470 )
+transform/pos = Vector2( 100, 450 )
+
+[node name="Player2" parent="YSort" instance=ExtResource( 7 )]
+
+transform/pos = Vector2( 770, 400 )
 
 [node name="floor" parent="." instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 485, 528 )
 transform/scale = Vector2( 16.4063, 0.25 )
+collision/mask = 8
 
 [node name="wallLeft" parent="." instance=ExtResource( 8 )]
 
-transform/pos = Vector2( 0, 430 )
-transform/scale = Vector2( 0.3, 4 )
+transform/pos = Vector2( 0, 270 )
+transform/scale = Vector2( 0.3, 9 )
+collision/mask = 8
 
 [node name="wallRight" parent="." instance=ExtResource( 8 )]
 
-transform/pos = Vector2( 960, 430 )
-transform/scale = Vector2( 0.3, 4 )
+transform/pos = Vector2( 960, 270 )
+transform/scale = Vector2( 0.3, 9 )
+collision/mask = 8
 
 [node name="ceil1" parent="." instance=ExtResource( 8 )]
 
 editor/display_folded = true
-transform/pos = Vector2( 480, 210 )
+transform/pos = Vector2( 480, 300 )
 transform/scale = Vector2( 16, 1 )
+collision/mask = 8
+
+[node name="overlay" parent="." instance=ExtResource( 9 )]
+
+visibility/visible = false
 
 
