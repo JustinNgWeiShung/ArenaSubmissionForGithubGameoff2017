@@ -5,6 +5,7 @@ func _init():
 	
 func test():
 	print("game state handler created")
+	
 	pass
 
 func _ready():

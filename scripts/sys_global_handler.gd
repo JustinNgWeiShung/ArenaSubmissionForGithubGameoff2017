@@ -11,6 +11,7 @@ var P1CHAR="p1"
 var P2CHAR="p2"
 var p1_char="p1"
 var effect = 0;
+var debug = false
 
 func getPlayerName():
 	return PlayerName;

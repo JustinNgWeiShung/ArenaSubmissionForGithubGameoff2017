@@ -172,4 +172,49 @@ collision/mask = 8
 
 visibility/visible = false
 
+[node name="Debug" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 70.0
+margin/top = 90.0
+margin/right = 250.0
+margin/bottom = 204.0
+text = "DebugLabel"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Debug2" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 70.0
+margin/top = 110.0
+margin/right = 250.0
+margin/bottom = 294.0
+text = "DebugLabel2"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Debug3" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 570.0
+margin/top = 90.0
+margin/right = 770.0
+margin/bottom = 204.0
+text = "DebugLabel3"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 

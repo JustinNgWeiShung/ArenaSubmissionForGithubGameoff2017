@@ -8,23 +8,31 @@ var p1BarNode
 var p2BarNode
 var timer = 0.0
 var ceilNode
-var IO_SCRIPT
+var IO_SCRIPT = load("res://scripts/game/io_handler.gd")
 var game_input
-var STATE_HANDLER_SCRIPT
+var STATE_HANDLER_SCRIPT = load("res://scripts/game/state_handler.gd")
 var game_state
 var p1
+var p2
 var ceilNodePos
 
+var debugLabel 
+var debugLabel2
+var debugLabel3
+
 func _ready():
-	IO_SCRIPT = load("res://scripts/game/io_handler.gd")
+	debugLabel = get_node("Debug")
+	debugLabel2 = get_node("Debug2")
+	debugLabel3 = get_node("Debug3")
+	
 	game_input = IO_SCRIPT.new()
 	game_input.test()
 	
-	STATE_HANDLER_SCRIPT = load("res://scripts/game/state_handler.gd")
 	game_state = STATE_HANDLER_SCRIPT.new()
 	game_state.test()
 	
-	p1=get_node("Player1")
+	p1=get_node("YSort/Player1")
+	p2=get_node("YSort/Player2")
 	
 	p1BarNode=get_node("p1VBox/p1Bar")
 	p2BarNode=get_node("p2VBox/p2Bar")
@@ -34,14 +42,12 @@ func _ready():
 	#To disable ceiling
 	ceilNode.set_trigger(false)
 	
-	
-	set_process(true);
-	set_process_input(true);
+	set_process(true)
+	set_process_input(true)
 	
 	pass
 	
 func _input(event):
-	
 	if(event.type == InputEvent.MOUSE_BUTTON):
 		if(event.button_index == BUTTON_RIGHT):
 			var name = GLOBAL_SYS.getPlayerName();
@@ -50,9 +56,16 @@ func _input(event):
 			print(power);
 			get_tree().set_input_as_handled()
 	pass
+
+func _debug(delta):
+	if(GLOBAL_SYS.debug):
+		debugLabel.set_text(str(p1.get_pos().x,",",p1.get_pos().y,",",p1.height,",",p1.currentJumpPower))
+		debugLabel2.set_text(p1.state.check())
+		debugLabel3.set_text(p2.state.check())
 		
 func _process(delta):
 	
+	_debug(delta)
 	
 	
 	timer += delta
@@ -79,7 +92,8 @@ func _process(delta):
 	
 	stageLock=Input.is_key_pressed(KEY_M)
 	
-	GLOBAL_INPUT.quitGame();
+	GLOBAL_INPUT.setDebug()
+	GLOBAL_INPUT.quitGame()
 	pass
 
 func _effectCheck():

@@ -45,33 +45,90 @@ shader_param/input_color = Color( 0.203922, 0.2, 0.231373, 0.992157 )
 shader_param/range = 0.8
 shader_param/output_color = Color( 0.178711, 0.267136, 0.476563, 1 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 
 resource/name = "attack"
-length = 1.0
+length = 0.15
 loop = false
-step = 0.1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.08, 0.11 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 2, 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0.08, 0.11, 0.15 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "setAttack"
+}, {
+"args": [  ],
+"method": "setRecover"
+}, {
+"args": [  ],
+"method": "setIdle"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
+
+resource/name = "block"
+length = 0.01
+loop = false
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [sub_resource type="Animation" id=6]
 
-resource/name = "block"
-length = 1.0
+length = 0.01
 loop = false
 step = 0.1
-
-[sub_resource type="Animation" id=4]
-
-resource/name = "idle"
-length = 1.0
-loop = false
-step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [sub_resource type="Animation" id=7]
 
 resource/name = "jump"
-length = 1.0
+length = 0.05
 loop = false
-step = 0.1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.05 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
 
 [sub_resource type="Animation" id=8]
 
@@ -124,12 +181,12 @@ _update_shape_index = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-playback/process_mode = 1
+playback/process_mode = 0
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/attack = SubResource( 5 )
-anims/block = SubResource( 6 )
-anims/idle = SubResource( 4 )
+anims/attack = SubResource( 4 )
+anims/block = SubResource( 5 )
+anims/idle = SubResource( 6 )
 anims/jump = SubResource( 7 )
 anims/run = SubResource( 8 )
 anims/walk = SubResource( 9 )
@@ -169,7 +226,7 @@ _update_shape_index = 0
 
 [node name="hitbox" type="Area2D" parent="."]
 
-transform/pos = Vector2( 40, 0 )
+transform/pos = Vector2( 44, 0 )
 transform/scale = Vector2( 0.5, 0.5 )
 input/pickable = true
 shapes/0/shape = SubResource( 11 )
@@ -180,7 +237,7 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 collision/layers = 0
-collision/mask = 2
+collision/mask = 0
 __meta__ = {
 "_edit_group_": true
 }
