@@ -11,7 +11,7 @@ var STATES={"IDLE":1,
 			"BLOCK":11,
 			"WALK":12,
 			"RUN":13,
-			"DAMAGE":14,
+			"HURT":14,
 			"DOWN":15,
 			"GETUP":16}
 
@@ -35,6 +35,10 @@ func checkAttack():
 	
 func checkBlock():
 	pass
+
+func checkHurt():
+	if(isHurt()):
+		play_hurt()
 
 func checkWalk():
 	var direction = Vector2(0,0)
@@ -85,10 +89,16 @@ func attack():
 	
 func recover():
 	currentState = STATES.RECOVER
+
+func hurt():
+	currentState = STATES.HURT
 	
 ##### STATE CHECKS ######
 func isAirborne():
 	return isJumping() || isJumpAttack() || isJumpRecover() || isJumpAttacking()
+
+func isHurt():
+	return currentState == STATES.HURT
 
 func isJumping():
 	return currentState == STATES.JUMP 
@@ -122,31 +132,50 @@ func isFinishAttack():
 
 ##### ANIMATION PLAYS #####
 func play_idle():
+	if(player.animation.is_playing()):
+		if(check_animation_playing("walk")):
+			player.animation.play("idle")
+		return
+	else:
 	#print("play Idle")
-	player.animation.play("idle")
+		player.animation.play("idle")
 
 func play_block():
 	player.animation.play("block")
-	print("play block")
+	#print("play block")
 
 func play_walk():
 	if(player.animation.is_playing()):
-		player.animation.advance(0.01)
+		return
 	else:
 		player.animation.play("walk")
 	#print("play walk")
 	
 func play_attack():
 	player.animation.play("attack")
-	print("play attack")
+	#print("play attack")
 	
 func play_jump():
-	print("play jump")
+	#print("play jump")
 	player.animation.play("jump")
+	
+func play_hurt():
+	if(player.animation.is_playing()):
+		if(check_animation_playing("walk") || check_animation_playing("idle")):
+			player.animation.play("hurt")
+		return
+	else:
+		player.animation.play("hurt")
 
 ##### EXTRA HELPER FUNCTIONS #####
 func set(state):
 	currentState = state
+
+func check_animation_playing(name):
+	if(player.animation.get_current_animation() == name):
+		return true
+	else:
+		return false
 
 func get_state():
 	return currentState

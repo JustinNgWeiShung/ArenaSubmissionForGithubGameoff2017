@@ -6,6 +6,10 @@ var AIStateClass = load("res://scripts/game/ai_state_handler.gd")
 var PlayerStateClass = load("res://scripts/game/player_state_handler.gd")
 var state 
 
+var life=100
+var damageRecoverFrameCount=0
+var currentDamageRecoverFrame=0
+
 var height=0
 var currentJumpPower =0
 
@@ -37,11 +41,16 @@ func _input(event):
 	pass
 	
 func _process(delta):
+	
+	_clampInView()
+	if(_handleHurt(delta)):
+		return
+	
 	_handleWalk(delta)
 	_handleJump(delta)
 	_handleAttack(delta)
 	
-	_clampInView()
+	
 	
 	pass
 
@@ -52,6 +61,24 @@ func _clampInView():
 	var pos = get_pos()
 	pos.x = clamp(pos.x,0+16, view_size.width-16)
 
+func _handleHurt(delta):
+	if(state.checkHurt()):
+		if(currentDamageRecoverFrame>0):
+			if(damageRecoverFrameCount<currentDamageRecoverFrame):
+				damageRecoverFrameCount+=1
+			else:
+				_reset_damage_recovery_counter()
+		return true
+	else:
+		return false
+		
+	return false
+
+func _reset_damage_recovery_counter():
+	damageRecoverFrameCount=0
+	currentDamageRecoverFrame=0
+	state.idle()
+			
 func _handleWalk(delta):
 	var direction = state.checkWalk()
 	var invert_scale = Vector2(-1,1)
@@ -132,15 +159,23 @@ func setIdle():
 	print("IDLE STATE")
 	state.idle()
 
+func damage(lifeDamage,frameDamage):
+	life -= lifeDamage
+	currentDamageRecoverFrame=frameDamage
+	
+
 func _on_hurtbox_area_enter( area ):
 	print("something enter p1 hurtbox")
 	print(area.get_name())
 	var test=area.get_parent()
 	print(test.get_name())
+	state.hurt()
+	damageRecoverFrameCount=0
 	pass # replace with function body\
 
 func _on_hitbox_area_enter( area ):
-	
 	print("something enter p1 hitbox")
+	var test = area.get_parent()
+	test.damage(5,5)
 	# Enemy enter hitbox
 	pass # replace with function body
