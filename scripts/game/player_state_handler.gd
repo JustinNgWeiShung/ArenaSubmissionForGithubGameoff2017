@@ -52,18 +52,20 @@ func checkWalk():
 		direction += Vector2(0,1)
 	
 	if((direction.x!= 0 || direction.y !=0) 
-		&& !isJumping()
+		&& !isAirborne()
 		&& !isInAttackState()):
 		currentState = STATES.WALK
+		play_walk()
 	else:
-		if(!isJumping() 
+		if(!isAirborne() 
 		&& !isInAttackState()):
 			currentState = STATES.IDLE
+			play_idle()
 	return direction
 
 func checkJump():
 	if(Input.is_action_pressed("P1_JUMP")):
-		if(!isJumping()):
+		if(!isAirborne()):
 			play_jump()
 		currentState = STATES.JUMP
 		
@@ -85,8 +87,20 @@ func recover():
 	currentState = STATES.RECOVER
 	
 ##### STATE CHECKS ######
+func isAirborne():
+	return isJumping() || isJumpAttack() || isJumpRecover() || isJumpAttacking()
+
 func isJumping():
-	return currentState == STATES.JUMP
+	return currentState == STATES.JUMP 
+
+func isJumpAttacking():
+	return currentState == STATES.JUMP_STARTUP
+	
+func isJumpAttack():
+	return currentState == STATES.JUMP_ATTACK
+	
+func isJumpRecover():
+	return currentState == STATES.JUMP_RECOVER
 
 func isWalking():
 	return currentState == STATES.WALK
@@ -108,7 +122,7 @@ func isFinishAttack():
 
 ##### ANIMATION PLAYS #####
 func play_idle():
-	print("play Idle")
+	#print("play Idle")
 	player.animation.play("idle")
 
 func play_block():
@@ -116,8 +130,11 @@ func play_block():
 	print("play block")
 
 func play_walk():
-	player.animation.play("walk")
-	print("play walk")
+	if(player.animation.is_playing()):
+		player.animation.advance(0.01)
+	else:
+		player.animation.play("walk")
+	#print("play walk")
 	
 func play_attack():
 	player.animation.play("attack")

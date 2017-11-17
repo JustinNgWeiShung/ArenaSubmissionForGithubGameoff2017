@@ -2,6 +2,7 @@
 
 extends KinematicBody2D
 
+var AIStateClass = load("res://scripts/game/ai_state_handler.gd")
 var PlayerStateClass = load("res://scripts/game/player_state_handler.gd")
 var state 
 
@@ -53,6 +54,12 @@ func _clampInView():
 
 func _handleWalk(delta):
 	var direction = state.checkWalk()
+	var invert_scale = Vector2(-1,1)
+	var normal_scale = Vector2(1,1)
+	if(direction.x < 0):
+		set_scale(invert_scale)
+	elif(direction.x>0):
+		set_scale(normal_scale)
 	move(direction * walkSpeed * delta)
 	pass
 
@@ -84,7 +91,7 @@ func _handleJump(delta):
 			#jump power needs to decay
 		#	currentJumpPower = currentJumpPower/1.5
 			
-	if(state.isJumping()):
+	if(state.isAirborne()):
 		var gravityPull = gravity*delta #gravity vector
 		currentJumpPower += gravity*delta
 		var jumpPowerDelta = currentJumpPower*delta #y vector of jump
