@@ -1,14 +1,12 @@
-# script player
-
 extends KinematicBody2D
-
 var AIStateClass = load("res://scripts/game/ai_state_handler.gd")
 var PlayerStateClass = load("res://scripts/game/player_state_handler.gd")
+var Player2StateClass = load("res://scripts/game/player2_state_handler.gd")
 var state 
 
 var life=100
-var damageRecoverFrameCount=0
 var currentDamageRecoverFrame=0
+var damageTimer=0
 
 var height=0
 var currentJumpPower =0
@@ -27,7 +25,17 @@ func _ready():
 	groundCollider = get_node("groundCollider")
 	animation = get_node("AnimationPlayer")
 	
-	state = PlayerStateClass.new(self)
+	if(GLOBAL_SYS.p2ModeEnable):
+		if(GLOBAL_SYS.p1_char == GLOBAL_SYS.P2CHAR):
+			state = PlayerStateClass.new(self)
+		else:
+			state = Player2StateClass.new(self)
+	else:
+		if(GLOBAL_SYS.p1_char == GLOBAL_SYS.P2CHAR):
+			state = PlayerStateClass.new(self)
+		else:
+			state = AIStateClass.new(self)
+		
 	#state.set_idle()
 	
 	# Called every time the node is added to the scene.
@@ -35,13 +43,16 @@ func _ready():
 	set_process(true);
 	set_process_input(true);
 	pass
-
 func _input(event):
 		
 	pass
 	
 func _process(delta):
-	
+	var parentTest = get_parent().get_parent()
+	if(parentTest.get_name() == "World"):
+		if(parentTest.endRound):
+			return
+		
 	_clampInView()
 	if(_handleHurt(delta)):
 		return
@@ -61,12 +72,20 @@ func _clampInView():
 	var pos = get_pos()
 	pos.x = clamp(pos.x,0+16, view_size.width-16)
 
+func _KO():
+	life=0
+	return
+
 func _handleHurt(delta):
+	
+	if(life<0):
+		_KO()
+		return
+	
 	if(state.checkHurt()):
 		if(currentDamageRecoverFrame>0):
-			if(damageRecoverFrameCount<currentDamageRecoverFrame):
-				damageRecoverFrameCount+=1
-			else:
+			damageTimer+= delta
+			if(damageTimer >= currentDamageRecoverFrame*0.016):
 				_reset_damage_recovery_counter()
 		return true
 	else:
@@ -75,8 +94,8 @@ func _handleHurt(delta):
 	return false
 
 func _reset_damage_recovery_counter():
-	damageRecoverFrameCount=0
 	currentDamageRecoverFrame=0
+	damageTimer=0
 	state.idle()
 			
 func _handleWalk(delta):
@@ -141,12 +160,7 @@ func _handleJump(delta):
 func _handleAttack(delta):
 	state.checkAttack()
 	pass
-#func _process(delta):
-#    var p1_pos = get_node("p1/char").get_pos()
-#    var p2_pos = get_node("p2/char").get_pos()
-#    var center_pos = Vector2(p1_pos.x + ((p2_pos.x - p1_pos.x) / 2), 200)
-#    get_node("screen_center").set_pos(center_pos)
-
+	
 func setAttack():
 	print("ATTACK STATE")
 	state.attack()
@@ -163,19 +177,26 @@ func damage(lifeDamage,frameDamage):
 	life -= lifeDamage
 	currentDamageRecoverFrame=frameDamage
 	
+	
+func getLife():
+	return life
+	
+func restart():
+	life =100
 
 func _on_hurtbox_area_enter( area ):
-	print("something enter p1 hurtbox")
-	print(area.get_name())
-	var test=area.get_parent()
-	print(test.get_name())
+	print("something enter p2 hurtbox")
 	state.hurt()
-	damageRecoverFrameCount=0
-	pass # replace with function body\
+	pass # replace with function body
 
 func _on_hitbox_area_enter( area ):
-	print("something enter p1 hitbox")
+	print("something enter p2 hitbox")
+	print(area.get_name())
+	if(state.check_animation_playing("attack")):
+		#then do the damage of that attack as well as the frame damage
+		pass
 	var test = area.get_parent()
 	test.damage(5,5)
-	# Enemy enter hitbox
+	
 	pass # replace with function body
+

@@ -1,0 +1,28 @@
+[gd_resource type="Animation" format=1]
+
+[resource]
+
+length = 0.01
+loop = false
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.01 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ Rect2( 179, 121, 80, 117 ) ]
+}
+

@@ -18,4 +18,5 @@ func _on_p1Button_pressed():
 func pressed():
 	print ("P1 Selected")
 	GLOBAL_SYS.p1_char=GLOBAL_SYS.P1CHAR;
+	GLOBAL_SYS.p2_char=GLOBAL_SYS.P2CHAR;
 	TRANSITION.fade_to(GLOBAL_SYS.GAME_SCENE_NAME)

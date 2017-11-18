@@ -22,12 +22,11 @@ func _input(event):
 		currentText = callToActionText1
 	
 func _process(delta):
+	if(transitionLock):
+		return
 	_effectCheck()
 	
-	#check if a button is pressed on keyboard
-	#or gamepad
-	
-	if(Input.is_action_pressed("ui_accept")):
+	if(Input.is_action_pressed("P1_START") || Input.is_action_pressed("P1_ATTACK")|| Input.is_action_pressed("P1_JUMP")):
 		TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME);
 		transitionLock=true;
 		

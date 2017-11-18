@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
-[ext_resource path="res://scripts/game.gd" type="Script" id=1]
+[ext_resource path="res://scripts/game/game.gd" type="Script" id=1]
 [ext_resource path="res://res/background.jpg" type="Texture" id=2]
 [ext_resource path="res://res/bottom.png" type="Texture" id=3]
 [ext_resource path="res://res/top.png" type="Texture" id=4]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scenes/player2.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/wall.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/overlay.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/gameover_panel.tscn" type="PackedScene" id=10]
 
 [node name="World" type="Control"]
 
@@ -29,8 +30,88 @@ transform/scale = Vector2( 1.16667, 1.16667 )
 texture = ExtResource( 2 )
 centered = false
 
+[node name="p1RoundsLeft" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 411.0
+margin/top = 37.0
+margin/right = 467.0
+margin/bottom = 51.0
+text = "p1Rounds"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="p2RoundsLeft" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 491.0
+margin/top = 37.0
+margin/right = 554.0
+margin/bottom = 51.0
+text = "p2Rounds"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="clock" type="CenterContainer" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 420.0
+margin/top = 10.0
+margin/right = 545.0
+margin/bottom = 60.0
+use_top_left = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="clock"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 54.0
+margin/top = 18.0
+margin/right = 70.0
+margin/bottom = 32.0
+alignment = 0
+
+[node name="timeLabel" type="Label" parent="clock/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 16.0
+margin/bottom = 14.0
+text = "99"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="p1VBox" type="VBoxContainer" parent="."]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
@@ -81,6 +162,7 @@ max_lines_visible = -1
 
 [node name="p2VBox" type="VBoxContainer" parent="."]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
@@ -133,15 +215,17 @@ max_lines_visible = -1
 
 [node name="YSort" type="YSort" parent="."]
 
+editor/display_folded = true
 sort/enabled = true
 
 [node name="Player1" parent="YSort" instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 100, 450 )
+transform/pos = Vector2( 110, 440 )
 
 [node name="Player2" parent="YSort" instance=ExtResource( 7 )]
 
-transform/pos = Vector2( 770, 400 )
+transform/pos = Vector2( 850, 440 )
+transform/scale = Vector2( -1, 1 )
 
 [node name="floor" parent="." instance=ExtResource( 8 )]
 
@@ -216,5 +300,13 @@ text = "DebugLabel3"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="gameoverpanel" parent="." instance=ExtResource( 10 )]
+
+visibility/visible = false
+margin/left = 240.0
+margin/top = 120.0
+margin/right = 750.0
+margin/bottom = 440.0
 
 

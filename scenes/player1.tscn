@@ -1,8 +1,9 @@
 [gd_scene load_steps=19 format=1]
 
-[ext_resource path="res://scripts/player1.gd" type="Script" id=1]
+[ext_resource path="res://scripts/game/player1.gd" type="Script" id=1]
 [ext_resource path="res://res/Game Maker Beat Em Up - Part 1 Assets/p1.png" type="Texture" id=2]
-[ext_resource path="res://scenes/recolorshader.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/player_animations/player1_idle.tres" type="Animation" id=3]
+[ext_resource path="res://scenes/recolorshader.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -127,7 +128,7 @@ tracks/1/keys = {
 "values": [ Rect2( 0, 239, 86, 116 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=6]
 
 resource/name = "getUp"
 length = 0.05
@@ -154,7 +155,7 @@ tracks/1/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=7]
 
 resource/name = "hurt"
 length = 0.01
@@ -181,35 +182,8 @@ tracks/1/keys = {
 "values": [ Rect2( 0, 120, 90, 117 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 
-length = 0.01
-loop = false
-step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath("hitbox:collision/mask")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = {
-"times": FloatArray( 0, 0.01 ),
-"transitions": FloatArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
-tracks/1/interp = 1
-tracks/1/imported = false
-tracks/1/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
-"update": 1,
-"values": [ Rect2( 179, 121, 80, 117 ) ]
-}
-
-[sub_resource type="Animation" id=7]
-
-resource/name = "jump"
 length = 0.05
 loop = false
 step = 0.01
@@ -224,7 +198,7 @@ tracks/0/keys = {
 "values": [ 0, 0 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=9]
 
 resource/name = "jump_attack"
 length = 0.09
@@ -256,7 +230,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=10]
 
 resource/name = "knockdown"
 length = 0.05
@@ -283,9 +257,8 @@ tracks/1/keys = {
 "values": [ 1, 0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=11]
 
-resource/name = "run"
 length = 0.01
 loop = false
 step = 0.01
@@ -300,9 +273,8 @@ tracks/0/keys = {
 "values": [ 0, 0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=12]
 
-resource/name = "walk"
 length = 0.3
 loop = true
 step = 0.01
@@ -327,12 +299,12 @@ tracks/1/keys = {
 "values": [ Rect2( 179, 0, 85, 119 ), Rect2( 261, 121, 80, 119 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=13]
 
 custom_solver_bias = 0.0
 extents = Vector2( 9.66667, 10.6667 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=14]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -352,9 +324,8 @@ script/script = ExtResource( 1 )
 
 material/material = SubResource( 3 )
 texture = ExtResource( 2 )
-frame = 1
 region = true
-region_rect = Rect2( 0, 120, 90, 117 )
+region_rect = Rect2( 179, 121, 80, 117 )
 
 [node name="groundCollider" type="CollisionShape2D" parent="."]
 
@@ -370,20 +341,20 @@ playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/attack = SubResource( 4 )
 anims/block = SubResource( 5 )
-anims/getUp = SubResource( 14 )
-anims/hurt = SubResource( 13 )
-anims/idle = SubResource( 6 )
-anims/jump = SubResource( 7 )
-anims/jump_attack = SubResource( 12 )
-anims/knockdown = SubResource( 15 )
-anims/run = SubResource( 8 )
-anims/walk = SubResource( 9 )
+anims/getUp = SubResource( 6 )
+anims/hurt = SubResource( 7 )
+anims/idle = ExtResource( 3 )
+anims/jump = SubResource( 8 )
+anims/jump_attack = SubResource( 9 )
+anims/knockdown = SubResource( 10 )
+anims/run = SubResource( 11 )
+anims/walk = SubResource( 12 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 
-[node name="recolorshader" parent="." instance=ExtResource( 3 )]
+[node name="recolorshader" parent="." instance=ExtResource( 4 )]
 
 editor/display_folded = true
 visibility/visible = false
@@ -393,7 +364,7 @@ visibility/visible = false
 transform/pos = Vector2( 1, 10 )
 transform/scale = Vector2( 0.9, 1.25 )
 input/pickable = true
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 13 )
 shapes/0/transform = Matrix32( 3, 0, 0, 3, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -408,7 +379,7 @@ __meta__ = {
 [node name="rectangle" type="CollisionShape2D" parent="hurtbox"]
 
 transform/scale = Vector2( 3, 3 )
-shape = SubResource( 10 )
+shape = SubResource( 13 )
 trigger = false
 _update_shape_index = 0
 
@@ -417,7 +388,7 @@ _update_shape_index = 0
 transform/pos = Vector2( 44, 18 )
 transform/scale = Vector2( 0.5, 0.34375 )
 input/pickable = true
-shapes/0/shape = SubResource( 11 )
+shapes/0/shape = SubResource( 14 )
 shapes/0/transform = Matrix32( 3, 0, 0, 3, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -433,7 +404,7 @@ __meta__ = {
 [node name="rectangle" type="CollisionShape2D" parent="hitbox"]
 
 transform/scale = Vector2( 3, 3 )
-shape = SubResource( 11 )
+shape = SubResource( 14 )
 trigger = false
 _update_shape_index = 0
 

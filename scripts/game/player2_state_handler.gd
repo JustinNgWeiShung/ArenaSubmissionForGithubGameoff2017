@@ -6,7 +6,7 @@ func _init(player).(player):
 
 ##### INPUT CHECKS #####
 func checkAttack():
-	if(Input.is_action_pressed("P1_ATTACK")):
+	if(Input.is_action_pressed("P2_ATTACK")):
 		if(currentState == STATES.IDLE || currentState == STATES.WALK):
 			if(currentState != STATES.STARTUP):
 				play_attack()
@@ -29,13 +29,13 @@ func checkWalk():
 	if(!isInWalkableState()):
 		return direction
 		
-	if(Input.is_action_pressed("P1_MOVE_RIGHT")):
+	if(Input.is_action_pressed("P2_MOVE_RIGHT")):
 		direction += Vector2(1,0)
-	if(Input.is_action_pressed("P1_MOVE_LEFT")):
+	if(Input.is_action_pressed("P2_MOVE_LEFT")):
 		direction += Vector2(-1,0)
-	if(Input.is_action_pressed("P1_MOVE_UP")):
+	if(Input.is_action_pressed("P2_MOVE_UP")):
 		direction += Vector2(0,-1)
-	if(Input.is_action_pressed("P1_MOVE_DOWN")):
+	if(Input.is_action_pressed("P2_MOVE_DOWN")):
 		direction += Vector2(0,1)
 	
 	if((direction.x!= 0 || direction.y !=0) 
@@ -51,7 +51,7 @@ func checkWalk():
 	return direction
 
 func checkJump():
-	if(Input.is_action_pressed("P1_JUMP")):
+	if(Input.is_action_pressed("P2_JUMP")):
 		if(!isAirborne()):
 			play_jump()
 		currentState = STATES.JUMP

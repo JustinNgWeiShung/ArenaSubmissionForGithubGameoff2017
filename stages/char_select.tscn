@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=1]
 
-[ext_resource path="res://scripts/char_select.gd" type="Script" id=1]
+[ext_resource path="res://scripts/menu/char_select.gd" type="Script" id=1]
 [ext_resource path="res://res/selection.png" type="Texture" id=2]
 [ext_resource path="res://res/Game Maker Beat Em Up - Part 1 Assets/PlayerHit.png" type="Texture" id=3]
-[ext_resource path="res://scripts/button_p1.gd" type="Script" id=4]
+[ext_resource path="res://scripts/menu/button_p1.gd" type="Script" id=4]
 [ext_resource path="res://res/Game Maker Beat Em Up - Part 1 Assets/RedEnemyHit.png" type="Texture" id=5]
-[ext_resource path="res://scripts/button_p2.gd" type="Script" id=6]
+[ext_resource path="res://scripts/menu/button_p2.gd" type="Script" id=6]
 [ext_resource path="res://scenes/overlay.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFontData" id=1]
@@ -26,7 +26,7 @@ length = 0.5
 loop = true
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Selection box:visibility/opacity")
+tracks/0/path = NodePath("p1Selection:visibility/opacity")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -48,11 +48,13 @@ margin/right = 960.0
 margin/bottom = 540.0
 script/script = ExtResource( 1 )
 
-[node name="Selection box" type="Sprite" parent="."]
+[node name="p1Selection" type="Sprite" parent="."]
 
-transform/pos = Vector2( 221, 302 )
+visibility/opacity = 0.712324
+transform/pos = Vector2( 191, 302 )
 transform/scale = Vector2( 9, 12 )
 texture = ExtResource( 2 )
+modulate = Color( 0.193787, 0.543087, 0.992188, 1 )
 
 [node name="Label" type="Label" parent="."]
 
@@ -79,9 +81,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 95.0
+margin/left = 60.0
 margin/top = 100.0
-margin/right = 345.0
+margin/right = 310.0
 margin/bottom = 480.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -98,9 +100,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 865.0
+margin/left = 900.0
 margin/top = 100.0
-margin/right = 1115.0
+margin/right = 1150.0
 margin/bottom = 480.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -125,9 +127,193 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "Blinking Selection Box"
 
-[connection signal="pressed" from="p1Button" to="p1Button" method="_on_p1Button_pressed"]
+[node name="p2ModeIndicator" type="Label" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 353.0
+margin/top = 446.0
+margin/right = 616.0
+margin/bottom = 460.0
+text = "[P2 Mode Enable]"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="p2ModeIndicator1" type="Label" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 353.0
+margin/top = 446.0
+margin/right = 616.0
+margin/bottom = 460.0
+text = "[P2 Mode Enable]"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 340.0
+margin/top = 108.0
+margin/right = 629.0
+margin/bottom = 436.0
+use_top_left = false
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 13.0
+margin/top = 0.0
+margin/right = 276.0
+margin/bottom = 328.0
+custom_constants/separation = 10
+alignment = 0
+
+[node name="SelectMessage" type="Label" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 263.0
+margin/bottom = 14.0
+text = "Player 1"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SelectMessage2" type="Label" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 24.0
+margin/right = 263.0
+margin/bottom = 38.0
+text = "Please select your character"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SelectMessage3" type="Label" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 48.0
+margin/right = 263.0
+margin/bottom = 79.0
+text = "
+Player 2"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SelectMessage4" type="Label" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 89.0
+margin/right = 263.0
+margin/bottom = 103.0
+text = "Always selects opposite character"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SelectMessage5" type="Label" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 113.0
+margin/right = 263.0
+margin/bottom = 127.0
+text = "To enable player 2 controls"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SelectMessage6" type="Label" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 137.0
+margin/right = 263.0
+margin/bottom = 151.0
+text = "Press start on player 2 controls"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="p1Controls" type="Label" parent="CenterContainer/VBoxContainer"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 161.0
+margin/right = 263.0
+margin/bottom = 328.0
+text = "P1/P2 Controls:
+w / up / dpad up: Move/Walk UP 
+s / down / dpad down: Move/Walk DOWN
+a / left / dpad left: Move/Walk LEFT
+d / right / dpad right: Move/Walk RIGHT
+space / enter / Controller Start : start
+t / numpad 7 / Controller X: attack 
+y / numpad 8 / Controller A : jump 
+u / numpad 9 / Controller B : block 
+"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="pressed" from="p1Button" to="p1Button" method="_on_Button_pressed"]
+
+[connection signal="pressed" from="p1Button" to="p1Button" method="_on_p1Button_pressed"]
 
 [connection signal="pressed" from="p2Button" to="p2Button" method="_on_p2Button_pressed"]
 
