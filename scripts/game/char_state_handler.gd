@@ -23,6 +23,98 @@ func _init(player):
 	currentState=STATES.IDLE
 	pass
 	
+##### STATE SETTERS ######
+func endJumping():
+	idle()
+
+func walk():
+	currentState = STATES.WALK
+		
+func idle():
+	currentState = STATES.IDLE
+
+func start_attack():
+	currentState = STATES.STARTUP
+
+func attack():
+	currentState = STATES.ATTACK
+	
+func recover():
+	currentState = STATES.RECOVER
+
+func hurt():
+	currentState = STATES.HURT
+
+func jump():
+	currentState = STATES.JUMP
+
+func jump_start_attack():
+	currentState=STATES.JUMP_STARTUP
+
+func jump_attack():
+	currentState = STATES.JUMP_ATTACK
+	
+func jump_recover():
+	currentState = STATES.JUMP_RECOVER
+	
+##### STATE CHECKS ######
+func isInWalkableState():
+	return isIdle() || isAirborne() || isWalking()
+
+func isInAttackState():
+	return isAttack() || isAttacking() || isFinishAttack()
+
+func isAirborne():
+	return isJumping() || isJumpAttack() || isJumpRecover() || isJumpAttacking()
+
+func isIdle():
+	return currentState == STATES.IDLE
+	
+func isHurt():
+	return currentState == STATES.HURT
+
+func isJumping():
+	return currentState == STATES.JUMP
+
+func isJumpAttacking():
+	return currentState == STATES.JUMP_STARTUP
+	
+func isJumpAttack():
+	return currentState == STATES.JUMP_ATTACK
+	
+func isJumpRecover():
+	return currentState == STATES.JUMP_RECOVER
+
+func isWalking():
+	return currentState == STATES.WALK
+
+func isAttacking():
+	return currentState == STATES.STARTUP
+
+func isAttack():
+	return currentState == STATES.ATTACK
+
+func isFinishAttack():
+	return currentState == STATES.RECOVER
+
+##### EXTRA HELPER FUNCTIONS #####
+func set(state):
+	currentState = state
+
+func check_animation_playing(name):
+	if(player.animation.get_current_animation() == name):
+		return true
+	else:
+		return false
+
+func get_state():
+	return currentState
+		
+func check():
+	for i in STATES:
+		if(STATES[i] == currentState):
+			return i
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here

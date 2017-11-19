@@ -1,8 +1,114 @@
-extends "res://scripts/game/char_state_handler.gd"
+var STATES={"IDLE":1,
+			"STARTUP":2,
+			"ATTACK":3,
+			"RECOVER":4,
+			"ATTACK_END":5,
+			"JUMP":6,
+			"JUMP_STARTUP":7,
+			"JUMP_ATTACK":8,
+			"JUMP_RECOVER":9,
+			"JUMP_ATTACK_END":10,
+			"BLOCK":11,
+			"WALK":12,
+			"RUN":13,
+			"HURT":14,
+			"DOWN":15,
+			"GETUP":16}
 
-func _init(player).(player):
+var currentState
+var player
+
+func _init(player):
 	
+	self.player = player
+	currentState=STATES.IDLE
 	pass
+	
+##### STATE SETTERS ######
+func endJumping():
+	idle()
+	
+func idle():
+	currentState = STATES.IDLE
+
+func attack():
+	currentState = STATES.ATTACK
+	
+func recover():
+	currentState = STATES.RECOVER
+
+func hurt():
+	currentState = STATES.HURT
+
+func jump():
+	currentState = STATES.JUMP
+	
+func jump_attack():
+	currentState = STATES.JUMP_ATTACK
+	
+func jump_recover():
+	currentState = STATES.JUMP_RECOVER
+	
+##### STATE CHECKS ######
+func isAirborne():
+	return isJumping() || isJumpAttack() || isJumpRecover() || isJumpAttacking()
+
+func isHurt():
+	return currentState == STATES.HURT
+
+func isJumping():
+	return currentState == STATES.JUMP
+
+func isJumpAttacking():
+	return currentState == STATES.JUMP_STARTUP
+	
+func isJumpAttack():
+	return currentState == STATES.JUMP_ATTACK
+	
+func isJumpRecover():
+	return currentState == STATES.JUMP_RECOVER
+
+func isWalking():
+	return currentState == STATES.WALK
+
+func isInWalkableState():
+	return currentState == STATES.IDLE || isAirborne() || currentState == STATES.WALK
+
+func isInAttackState():
+	return isAttack() || isAttacking() || isFinishAttack()
+
+func isAttacking():
+	return currentState == STATES.STARTUP
+
+func isAttack():
+	return currentState == STATES.ATTACK
+
+func isFinishAttack():
+	return currentState == STATES.RECOVER
+
+##### EXTRA HELPER FUNCTIONS #####
+func set(state):
+	currentState = state
+
+func check_animation_playing(name):
+	if(player.animation.get_current_animation() == name):
+		return true
+	else:
+		return false
+
+func get_state():
+	return currentState
+		
+func check():
+	for i in STATES:
+		if(STATES[i] == currentState):
+			return i
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	pass
+
 
 ##### INPUT CHECKS #####
 func checkAttack():
@@ -60,59 +166,6 @@ func checkJump():
 	else:
 		return false
 
-##### STATE SETTERS ######
-func endJumping():
-	idle()
-	
-func idle():
-	currentState = STATES.IDLE
-
-func attack():
-	currentState = STATES.ATTACK
-	
-func recover():
-	currentState = STATES.RECOVER
-
-func hurt():
-	currentState = STATES.HURT
-	
-##### STATE CHECKS ######
-func isAirborne():
-	return isJumping() || isJumpAttack() || isJumpRecover() || isJumpAttacking()
-
-func isHurt():
-	return currentState == STATES.HURT
-
-func isJumping():
-	return currentState == STATES.JUMP 
-
-func isJumpAttacking():
-	return currentState == STATES.JUMP_STARTUP
-	
-func isJumpAttack():
-	return currentState == STATES.JUMP_ATTACK
-	
-func isJumpRecover():
-	return currentState == STATES.JUMP_RECOVER
-
-func isWalking():
-	return currentState == STATES.WALK
-
-func isInWalkableState():
-	return currentState == STATES.IDLE || currentState == STATES.JUMP || currentState == STATES.WALK
-
-func isInAttackState():
-	return isAttack() || isAttacking() || isFinishAttack()
-
-func isAttacking():
-	return currentState == STATES.STARTUP
-
-func isAttack():
-	return currentState == STATES.ATTACK
-
-func isFinishAttack():
-	return currentState == STATES.RECOVER
-
 ##### ANIMATION PLAYS #####
 func play_idle():
 	if(player.animation.is_playing()):
@@ -149,26 +202,3 @@ func play_hurt():
 		return
 	else:
 		player.animation.play("hurt")
-
-##### EXTRA HELPER FUNCTIONS #####
-func set(state):
-	currentState = state
-
-func check_animation_playing(name):
-	if(player.animation.get_current_animation() == name):
-		return true
-	else:
-		return false
-
-func get_state():
-	return currentState
-		
-func check():
-	for i in STATES:
-		if(STATES[i] == currentState):
-			return i
-
-func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass

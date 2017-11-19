@@ -32,6 +32,10 @@ func _ready():
 	debugLabel2 = get_node("Debug2")
 	debugLabel3 = get_node("Debug3")
 	
+	debugLabel.hide()
+	debugLabel2.hide()
+	debugLabel3.hide()
+	
 	gameOverPanel = get_node("gameoverpanel")
 	
 	roundTimer = get_node("clock/VBoxContainer/timeLabel")
@@ -74,7 +78,7 @@ func _input(event):
 func _debug(delta):
 	if(GLOBAL_SYS.debug):
 		debugLabel.set_text(str(p1.get_pos().x,",",p1.get_pos().y,",",p1.height,",",p1.currentJumpPower))
-		debugLabel2.set_text(p1.state.check())
+		debugLabel2.set_text(p1.state.charState.check())
 		debugLabel3.set_text(p2.state.check())
 
 func _checkGameOver():
