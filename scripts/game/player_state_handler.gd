@@ -1,14 +1,18 @@
 var CharStateClass = load("res://scripts/game/char_state_handler.gd")
 var charState
 var player
+
+var p1attackLock=false
+
 func _init(player):
 	charState = CharStateClass.new(player)
 	self.player = player
 	pass
 
+
 ##### INPUT CHECKS #####
 func checkAttack():
-	if(Input.is_action_pressed("P1_ATTACK")):
+	if(Input.is_action_pressed("P1_ATTACK") && !p1attackLock):
 		if(charState.isIdle() || charState.isWalking()):
 			if(!charState.isAttacking()):
 				play_attack()
@@ -17,10 +21,7 @@ func checkAttack():
 			if(!charState.isJumpAttack() && !charState.isJumpRecover() && !charState.isJumpAttacking()):
 				play_jump_attack()
 				charState.jump_start_attack()
-			
-	
-func checkBlock():
-	pass
+	p1attackLock=Input.is_action_pressed("P1_ATTACK")
 
 func checkHurt():
 	if(charState.isHurt()):
@@ -74,10 +75,6 @@ func play_idle():
 	else:
 	#print("play Idle")
 		player.animation.play("idle")
-
-func play_block():
-	player.animation.play("block")
-	#print("play block")
 
 func play_walk():
 	if(player.animation.is_playing()):

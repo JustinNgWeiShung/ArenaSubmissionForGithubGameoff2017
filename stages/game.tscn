@@ -215,12 +215,11 @@ max_lines_visible = -1
 
 [node name="YSort" type="YSort" parent="."]
 
-editor/display_folded = true
 sort/enabled = true
 
 [node name="Player1" parent="YSort" instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 110, 440 )
+transform/pos = Vector2( 130, 420 )
 
 [node name="Player2" parent="YSort" instance=ExtResource( 7 )]
 

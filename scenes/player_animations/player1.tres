@@ -13,33 +13,23 @@ tracks/0/keys = {
 "times": FloatArray( 0, 0.08, 0.11 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 2, 0 ]
+"values": [ 0, 2, 1 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
-"times": FloatArray( 0, 0.03, 0.08, 0.11, 0.12, 0.15 ),
-"transitions": FloatArray( 1, 1, 1, 1, 1, 1 ),
+"times": FloatArray( 0, 0.08, 0.11, 0.15 ),
+"transitions": FloatArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 179, 121, 80, 117 ), Rect2( 92, 120, 85, 118 ), Rect2( 0, 0, 97, 118 ), Rect2( 0, 0, 97, 118 ), Rect2( 92, 120, 85, 118 ), Rect2( 179, 121, 80, 117 ) ]
+"values": [ Rect2( 0, 192, 64, 64 ), Rect2( 64, 192, 64, 64 ), Rect2( 0, 192, 64, 64 ), Rect2( 0, 192, 64, 64 ) ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("hitbox:transform/pos")
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
-"times": FloatArray( 0.08, 0.11 ),
-"transitions": FloatArray( 1, 1 ),
-"update": 1,
-"values": [ Vector2( 44, 18 ), Vector2( 44, 18 ) ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/imported = false
-tracks/3/keys = {
 "times": FloatArray( 0.08, 0.11, 0.15 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "values": [ {
@@ -52,5 +42,15 @@ tracks/3/keys = {
 "args": [  ],
 "method": "setIdle"
 } ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("hitbox:transform/pos")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0.08 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ Vector2( 27.6748, 10.9502 ) ]
 }
 

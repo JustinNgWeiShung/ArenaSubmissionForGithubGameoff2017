@@ -8,12 +8,9 @@ var STATES={"IDLE":1,
 			"JUMP_ATTACK":8,
 			"JUMP_RECOVER":9,
 			"JUMP_ATTACK_END":10,
-			"BLOCK":11,
-			"WALK":12,
-			"RUN":13,
-			"HURT":14,
-			"DOWN":15,
-			"GETUP":16}
+			"WALK":11,
+			"HURT":12,
+			"KO":13}
 
 var currentState
 var player
@@ -32,6 +29,9 @@ func walk():
 		
 func idle():
 	currentState = STATES.IDLE
+
+func ko():
+	currentState=STATES.KO
 
 func start_attack():
 	currentState = STATES.STARTUP
@@ -58,6 +58,8 @@ func jump_recover():
 	currentState = STATES.JUMP_RECOVER
 	
 ##### STATE CHECKS ######
+
+
 func isInWalkableState():
 	return isIdle() || isAirborne() || isWalking()
 
@@ -73,6 +75,9 @@ func isIdle():
 func isHurt():
 	return currentState == STATES.HURT
 
+func isKO():
+	return currentState == STATES.KO
+	
 func isJumping():
 	return currentState == STATES.JUMP
 

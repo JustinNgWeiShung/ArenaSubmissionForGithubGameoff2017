@@ -79,6 +79,7 @@ func _clampInView():
 
 func _KO():
 	life=0
+	state.charState.setKO()
 	return
 
 func _handleHurt(delta):
@@ -105,8 +106,8 @@ func _reset_damage_recovery_counter():
 			
 func _handleWalk(delta):
 	var direction = state.checkWalk()
-	var invert_scale = Vector2(-1,1)
-	var normal_scale = Vector2(1,1)
+	var invert_scale = Vector2(-3,3)
+	var normal_scale = Vector2(3,3)
 	if(direction.x < 0):
 		set_scale(invert_scale)
 	elif(direction.x>0):
@@ -143,13 +144,13 @@ func _handleJump(delta):
 		#	currentJumpPower = currentJumpPower/1.5
 			
 	if(state.charState.isAirborne()):
-		var gravityPull = gravity*delta #gravity vector
+		var gravityPull = gravity*delta#gravity vector
 		currentJumpPower += gravity*delta
-		var jumpPowerDelta = currentJumpPower*delta #y vector of jump
+		var jumpPowerDelta = currentJumpPower*delta /3#y vector of jump
 		height += -(jumpPowerDelta)
 		move(Vector2(0,jumpPowerDelta))
 		var groundColliderPos = Vector2(groundCollider.get_pos().x,groundCollider.get_pos().y)
-		groundColliderPos.y -= jumpPowerDelta
+		groundColliderPos.y -= jumpPowerDelta /3
 		groundCollider.set_pos(groundColliderPos)
 		#jumping power needs to decay over time
 		
