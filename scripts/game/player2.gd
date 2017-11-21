@@ -48,7 +48,6 @@ func _input(event):
 	pass
 	
 func _process(delta):
-	set_z(get_pos().y)
 	
 	var parentTest = get_parent().get_parent()
 	if(parentTest.get_name() == "World"):
@@ -63,7 +62,7 @@ func _process(delta):
 	_handleJump(delta)
 	_handleAttack(delta)
 	
-	
+	_handleZIndex()
 	
 	pass
 
@@ -77,6 +76,9 @@ func _clampInView():
 func _KO():
 	life=0
 	return
+
+func _handleZIndex():
+	set_z(get_pos().y+height)
 
 func _handleHurt(delta):
 	
