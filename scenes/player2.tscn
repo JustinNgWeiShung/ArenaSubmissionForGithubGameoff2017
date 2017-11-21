@@ -74,9 +74,10 @@ extents = Vector2( 10, 10 )
 
 [node name="Player2" type="KinematicBody2D"]
 
+transform/scale = Vector2( 3, 3 )
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 56 )
+shapes/0/transform = Matrix32( 0.444444, 0, 0, 0.444444, -1.33333, 31 )
 shapes/0/trigger = false
 collision/layers = 8
 collision/mask = 4
@@ -85,13 +86,16 @@ script/script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
+transform/pos = Vector2( 0, 8.63247 )
+transform/scale = Vector2( 0.401709, 0.401709 )
 texture = ExtResource( 2 )
 region = true
 region_rect = Rect2( 92, 0, 80, 117 )
 
 [node name="groundCollider" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( 0, 56 )
+transform/pos = Vector2( -1.33333, 31 )
+transform/scale = Vector2( 0.444444, 0.444444 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
@@ -110,8 +114,8 @@ autoplay = ""
 
 [node name="hurtbox" type="Area2D" parent="."]
 
-transform/pos = Vector2( 0, 5.99999 )
-transform/scale = Vector2( 0.9, 1.25 )
+transform/pos = Vector2( -0.133332, 10.3333 )
+transform/scale = Vector2( 0.322917, 0.520833 )
 input/pickable = true
 shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 3, 0, 0, 3, 0, -9.53674e-07 )
@@ -136,8 +140,8 @@ _update_shape_index = 0
 
 [node name="hitbox" type="Area2D" parent="."]
 
-transform/pos = Vector2( 40, 9.53674e-07 )
-transform/scale = Vector2( 0.375, 0.375 )
+transform/pos = Vector2( 18.3333, 15 )
+transform/scale = Vector2( 0.21875, 0.21875 )
 input/pickable = true
 shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 3, 0, 0, 3, 0, 0 )

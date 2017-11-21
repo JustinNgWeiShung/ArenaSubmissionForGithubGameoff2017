@@ -48,6 +48,8 @@ func _input(event):
 	pass
 	
 func _process(delta):
+	set_z(get_pos().y)
+	
 	var parentTest = get_parent().get_parent()
 	if(parentTest.get_name() == "World"):
 		if(parentTest.endRound):

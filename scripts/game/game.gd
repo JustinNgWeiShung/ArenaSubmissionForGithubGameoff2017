@@ -22,6 +22,7 @@ var p2RoundCounter
 var debugLabel 
 var debugLabel2
 var debugLabel3
+var debugLabel4
 
 var endRound = false
 var gameOver=false
@@ -31,10 +32,12 @@ func _ready():
 	debugLabel = get_node("Debug")
 	debugLabel2 = get_node("Debug2")
 	debugLabel3 = get_node("Debug3")
+	debugLabel4 = get_node("Debug4")
 	
-	debugLabel.hide()
-	debugLabel2.hide()
-	debugLabel3.hide()
+	#debugLabel.hide()
+	#debugLabel2.hide()
+	#debugLabel3.hide()
+	#debugLabel4.hide()
 	
 	gameOverPanel = get_node("gameoverpanel")
 	
@@ -46,8 +49,8 @@ func _ready():
 	game_state = STATE_HANDLER_SCRIPT.new()
 	game_state.test()
 	
-	p1=get_node("YSort/Player1")
-	p2=get_node("YSort/Player2")
+	p1=get_node("Player1")
+	p2=get_node("Player2")
 	
 	p1BarNode=get_node("p1VBox/p1Bar")
 	p2BarNode=get_node("p2VBox/p2Bar")
@@ -78,8 +81,12 @@ func _input(event):
 func _debug(delta):
 	if(GLOBAL_SYS.debug):
 		debugLabel.set_text(str(p1.get_pos().x,",",p1.get_pos().y,",",p1.height,",",p1.currentJumpPower))
-		debugLabel2.set_text(p1.state.charState.check())
-		debugLabel3.set_text(p2.state.check())
+		#debugLabel2.set_text(p1.state.charState.check())
+		#debugLabel3.set_text(p2.state.check())
+		debugLabel2.set_text(str(p1.get_z()))
+		
+		debugLabel3.set_text(str(p2.get_pos().x,",",p2.get_pos().y,",",p2.height,",",p2.currentJumpPower))
+		debugLabel4.set_text(str(p2.get_z()))
 
 func _checkGameOver():
 	if(GLOBAL_SYS.p1WinRound>=2 && GLOBAL_SYS.p2WinRound>=2):

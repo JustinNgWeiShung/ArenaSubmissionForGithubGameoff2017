@@ -53,6 +53,9 @@ func _input(event):
 	pass
 	
 func _process(delta):
+	
+	set_z(get_pos().y)
+	
 	var parentTest = get_parent().get_parent()
 	if(parentTest.get_name() == "World"):
 		if(parentTest.endRound):
@@ -106,8 +109,9 @@ func _reset_damage_recovery_counter():
 			
 func _handleWalk(delta):
 	var direction = state.checkWalk()
-	var invert_scale = Vector2(-3,3)
-	var normal_scale = Vector2(3,3)
+	var currScale = get_scale()
+	var invert_scale = Vector2(currScale.x*-1,currScale.y)
+	var normal_scale = Vector2(currScale.x,currScale.y)
 	if(direction.x < 0):
 		set_scale(invert_scale)
 	elif(direction.x>0):
