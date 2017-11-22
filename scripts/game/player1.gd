@@ -152,11 +152,12 @@ func _handleJump(delta):
 	if(state.charState.isAirborne()):
 		var gravityPull = gravity*delta#gravity vector
 		currentJumpPower += gravity*delta
-		var jumpPowerDelta = currentJumpPower*delta /3#y vector of jump
+		
+		var jumpPowerDelta = currentJumpPower*delta / get_scale().y#y vector of jump
 		height += -(jumpPowerDelta)
 		move(Vector2(0,jumpPowerDelta))
 		var groundColliderPos = Vector2(groundCollider.get_pos().x,groundCollider.get_pos().y)
-		groundColliderPos.y -= jumpPowerDelta /3
+		groundColliderPos.y -= jumpPowerDelta / get_scale().y
 		groundCollider.set_pos(groundColliderPos)
 		#jumping power needs to decay over time
 		

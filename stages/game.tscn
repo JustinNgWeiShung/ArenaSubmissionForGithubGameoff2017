@@ -215,11 +215,13 @@ max_lines_visible = -1
 
 [node name="Player1" parent="." instance=ExtResource( 6 )]
 
-transform/pos = Vector2( 130, 420 )
+transform/pos = Vector2( 130, 450 )
+transform/scale = Vector2( 2, 2 )
 
 [node name="Player2" parent="." instance=ExtResource( 7 )]
 
 transform/pos = Vector2( 850, 420 )
+transform/scale = Vector2( 3, 3 )
 
 [node name="floor" parent="." instance=ExtResource( 8 )]
 
