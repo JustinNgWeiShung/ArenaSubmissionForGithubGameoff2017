@@ -99,7 +99,7 @@ func _handleHurt(delta):
 func _reset_damage_recovery_counter():
 	currentDamageRecoverFrame=0
 	damageTimer=0
-	state.idle()
+	state.charState.idle()
 			
 func _handleWalk(delta):
 	var direction = state.checkWalk()
@@ -140,7 +140,7 @@ func _handleJump(delta):
 			#jump power needs to decay
 		#	currentJumpPower = currentJumpPower/1.5
 			
-	if(state.isAirborne()):
+	if(state.charState.isAirborne()):
 		var gravityPull = gravity*delta #gravity vector
 		currentJumpPower += gravity*delta
 		var jumpPowerDelta = currentJumpPower*delta #y vector of jump
@@ -154,7 +154,7 @@ func _handleJump(delta):
 		
 	#Height can never be less than 0
 	if(height<0):
-		state.endJumping()
+		state.charState.endJumping()
 		move(Vector2(0,0+height))
 		height=0
 		currentJumpPower=0
@@ -166,15 +166,15 @@ func _handleAttack(delta):
 	
 func setAttack():
 	print("ATTACK STATE")
-	state.attack()
+	state.charState.attack()
 
 func setRecover():
 	print("RECOVER STATE")
-	state.recover()
+	state.charState.recover()
 
 func setIdle():
 	print("IDLE STATE")
-	state.idle()
+	state.charState.idle()
 
 func setJumpAttack():
 	print("JUMP ATTACK STATE")
@@ -201,7 +201,7 @@ func restart():
 
 func _on_hurtbox_area_enter( area ):
 	print("something enter p2 hurtbox")
-	state.hurt()
+	state.charState.hurt()
 	pass # replace with function body
 
 func _on_hitbox_area_enter( area ):
@@ -211,7 +211,7 @@ func _on_hitbox_area_enter( area ):
 		#then do the damage of that attack as well as the frame damage
 		pass
 	var test = area.get_parent()
-	test.damage(5,5)
+	test.damage(10,5)
 	
 	pass # replace with function body
 

@@ -1,134 +1,91 @@
-extends "res://scripts/game/char_state_handler.gd"
+var CharStateClass = load("res://scripts/game/char_state_handler.gd")
+var charState
+var player
 
-func  _init(player).(player):
+var aiattackLock=false
+
+func _init(player):
+	charState = CharStateClass.new(player)
 	self.player = player
-	currentState=STATES.IDLE
 	pass
+
 
 ##### INPUT CHECKS #####
 func checkAttack():
-	#if(Input.is_action_pressed("P1_ATTACK")):
-	#	if(currentState == STATES.IDLE || currentState == STATES.WALK):
-	#		if(currentState != STATES.STARTUP):
+	# ai needs to decide how to attack
+	
+	#if(Input.is_action_pressed("P1_ATTACK") && !aiattackLock):
+	#	if(charState.isIdle() || charState.isWalking()):
+	#		if(!charState.isAttacking()):
 	#			play_attack()
-	#		currentState = STATES.STARTUP
-	#	elif(currentState == STATES.JUMP):
-	#		currentState = STATES.JUMP_STARTUP
-	return
-		
-func checkBlock():
+	#		charState.start_attack()
+	#	elif(charState.isAirborne()):
+	#		if(!charState.isJumpAttack() && !charState.isJumpRecover() && !charState.isJumpAttacking()):
+	#			play_jump_attack()
+	#			charState.jump_start_attack()
+	#aiattackLock=Input.is_action_pressed("P1_ATTACK")
 	pass
 
 func checkHurt():
-	if(isHurt()):
+	if(charState.isHurt()):
 		play_hurt()
 		return true
 	return false
 
 func checkWalk():
+	#AI needs to decide how to walk	
+	
 	var direction = Vector2(0,0)
 	
-	if(!isInWalkableState()):
+	if(!charState.isInWalkableState()):
 		return direction
 		
 	#if(Input.is_action_pressed("P1_MOVE_RIGHT")):
-	#	direction += Vector2(1,0)
+		#direction += Vector2(1,0)
 	#if(Input.is_action_pressed("P1_MOVE_LEFT")):
-	#	direction += Vector2(-1,0)
+		#direction += Vector2(-1,0)
 	#if(Input.is_action_pressed("P1_MOVE_UP")):
-	#	direction += Vector2(0,-1)
+		#direction += Vector2(0,-1)
 	#if(Input.is_action_pressed("P1_MOVE_DOWN")):
-	#	direction += Vector2(0,1)
+		#direction += Vector2(0,1)
 	
 	if((direction.x!= 0 || direction.y !=0) 
-		&& !isAirborne()
-		&& !isInAttackState()):
-		currentState = STATES.WALK
+		&& !charState.isAirborne()
+		&& !charState.isInAttackState()):
+		charState.walk()
 		play_walk()
 	else:
-		if(!isAirborne() 
-		&& !isInAttackState()):
-			currentState = STATES.IDLE
+		if(!charState.isAirborne() 
+		&& !charState.isInAttackState()):
+			charState.idle()
 			play_idle()
 	return direction
 
 func checkJump():
+	# Ai needs to decide when to jump
 	#if(Input.is_action_pressed("P1_JUMP")):
-	#	if(!isAirborne()):
+	#	if(!charState.isAirborne()):
 	#		play_jump()
-	#	currentState = STATES.JUMP
-	#	
+	#	charState.jump()
 	#	return true
 	#else:
 	#	return false
-	return false
-
-##### STATE SETTERS ######
-func endJumping():
-	idle()
-	
-func idle():
-	currentState = STATES.IDLE
-
-func attack():
-	currentState = STATES.ATTACK
-	
-func recover():
-	currentState = STATES.RECOVER
-
-func hurt():
-	currentState = STATES.HURT
-	
-##### STATE CHECKS ######
-func isAirborne():
-	return isJumping() || isJumpAttack() || isJumpRecover() || isJumpAttacking()
-
-func isHurt():
-	return currentState == STATES.HURT
-
-func isJumping():
-	return currentState == STATES.JUMP 
-
-func isJumpAttacking():
-	return currentState == STATES.JUMP_STARTUP
-	
-func isJumpAttack():
-	return currentState == STATES.JUMP_ATTACK
-	
-func isJumpRecover():
-	return currentState == STATES.JUMP_RECOVER
-
-func isWalking():
-	return currentState == STATES.WALK
-
-func isInWalkableState():
-	return currentState == STATES.IDLE || currentState == STATES.JUMP || currentState == STATES.WALK
-
-func isInAttackState():
-	return isAttack() || isAttacking() || isFinishAttack()
-
-func isAttacking():
-	return currentState == STATES.STARTUP
-
-func isAttack():
-	return currentState == STATES.ATTACK
-
-func isFinishAttack():
-	return currentState == STATES.RECOVER
+	if(!charState.isAirborne()):
+		return true
+	else:
+		return false
+	#		play_jump()
+	#	charState.jump()
 
 ##### ANIMATION PLAYS #####
 func play_idle():
 	if(player.animation.is_playing()):
-		if(check_animation_playing("walk")):
+		if(charState.check_animation_playing("walk")):
 			player.animation.play("idle")
 		return
 	else:
 	#print("play Idle")
 		player.animation.play("idle")
-
-func play_block():
-	player.animation.play("block")
-	#print("play block")
 
 func play_walk():
 	if(player.animation.is_playing()):
@@ -136,7 +93,10 @@ func play_walk():
 	else:
 		player.animation.play("walk")
 	#print("play walk")
-	
+
+func play_jump_attack():
+	player.animation.play("jump_attack")
+			
 func play_attack():
 	player.animation.play("attack")
 	#print("play attack")
@@ -147,31 +107,9 @@ func play_jump():
 	
 func play_hurt():
 	if(player.animation.is_playing()):
-		if(check_animation_playing("walk") || check_animation_playing("idle")):
+		if(charState.check_animation_playing("walk") || charState.check_animation_playing("idle")):
 			player.animation.play("hurt")
 		return
 	else:
 		player.animation.play("hurt")
 
-##### EXTRA HELPER FUNCTIONS #####
-func set(state):
-	currentState = state
-
-func check_animation_playing(name):
-	if(player.animation.get_current_animation() == name):
-		return true
-	else:
-		return false
-
-func get_state():
-	return currentState
-		
-func check():
-	for i in STATES:
-		if(STATES[i] == currentState):
-			return i
-
-func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass

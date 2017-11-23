@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://scripts/game/player2.gd" type="Script" id=1]
 [ext_resource path="res://res/char2/char2.png" type="Texture" id=2]
@@ -154,6 +154,71 @@ tracks/1/keys = {
 "values": [ Rect2( 64, 128, 64, 64 ), Rect2( 64, 128, 64, 64 ) ]
 }
 
+[sub_resource type="Animation" id=9]
+
+resource/name = "jump_attack"
+length = 0.5
+loop = false
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("hitbox:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.05, 0.2, 0.3, 0.35 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 4.43992, 12.6015 ), Vector2( 24.3945, -20.685 ), Vector2( -25.5721, 8.33583 ), Vector2( 24.4277, -20.685 ), Vector2( 6.59563, 12.5316 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("hitbox:collision/mask")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 0.2, 0.3 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:region_rect")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0, 0.05, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 192, 64, 64 ), Rect2( 64, 192, 64, 64 ), Rect2( 128, 192, 64, 64 ), Rect2( 64, 192, 64, 64 ), Rect2( 0, 192, 64, 64 ), Rect2( 0, 192, 64, 64 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0.2, 0.3, 0.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "setAttack"
+}, {
+"args": [  ],
+"method": "setRecover"
+}, {
+"args": [  ],
+"method": "setIdle"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("hitbox:transform/scale")
+tracks/4/interp = 1
+tracks/4/imported = false
+tracks/4/keys = {
+"times": FloatArray( 0, 0.05, 0.15, 0.2, 0.3, 0.5 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0.0979552, 0.175916 ), Vector2( 0.158435, 0.0983389 ), Vector2( 0.154011, 0.109265 ), Vector2( 0.0983388, 0.174824 ), Vector2( 0.1, 0.1 ), Vector2( 0.1, 0.1 ) ]
+}
+
 [sub_resource type="Animation" id=6]
 
 resource/name = "walk"
@@ -207,7 +272,7 @@ script/script = ExtResource( 1 )
 transform/pos = Vector2( 0, -1.36753 )
 texture = ExtResource( 2 )
 region = true
-region_rect = Rect2( 0, 192, 64, 64 )
+region_rect = Rect2( 128, 192, 64, 64 )
 
 [node name="groundCollider" type="CollisionShape2D" parent="."]
 
@@ -226,6 +291,7 @@ anims/attack = SubResource( 8 )
 anims/hurt = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/jump = SubResource( 7 )
+anims/jump_attack = SubResource( 9 )
 anims/walk = SubResource( 6 )
 playback/active = true
 playback/speed = 1.0
@@ -260,8 +326,8 @@ _update_shape_index = 0
 
 [node name="hitbox" type="Area2D" parent="."]
 
-transform/pos = Vector2( 6.59563, 12.5316 )
-transform/scale = Vector2( 0.1, 0.1 )
+transform/pos = Vector2( -25.5721, 8.33583 )
+transform/scale = Vector2( 0.0983388, 0.174824 )
 input/pickable = true
 shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 3, 0, 0, 3, 0, 0 )
@@ -271,7 +337,6 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 collision/layers = 0
-collision/mask = 0
 __meta__ = {
 "_edit_group_": true
 }
