@@ -45,12 +45,8 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true);
-	set_process_input(true);
 	pass
 
-func _input(event):
-		
-	pass
 	
 func _process(delta):
 	

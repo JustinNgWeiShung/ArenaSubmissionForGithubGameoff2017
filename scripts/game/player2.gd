@@ -21,6 +21,8 @@ var runSpeed = 300
 var groundCollider
 var animation
 
+var pushbackVector = Vector2(0,0)
+
 func _ready():
 	groundCollider = get_node("groundCollider")
 	animation = get_node("AnimationPlayer")
@@ -41,10 +43,6 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true);
-	set_process_input(true);
-	pass
-func _input(event):
-		
 	pass
 	
 func _process(delta):
@@ -75,6 +73,7 @@ func _clampInView():
 
 func _KO():
 	life=0
+	state.charState.setKO()
 	return
 
 func _handleZIndex():
@@ -176,6 +175,18 @@ func setRecover():
 func setIdle():
 	print("IDLE STATE")
 	state.idle()
+
+func setJumpAttack():
+	print("JUMP ATTACK STATE")
+	state.charState.jump_attack()
+
+func setJumpRecover():
+	print("JUMP RECOVER STATE")
+	state.charState.jump_recover()
+
+func setJump():
+	print("JUMP STATE")
+	state.charState.jump()
 
 func damage(lifeDamage,frameDamage):
 	life -= lifeDamage

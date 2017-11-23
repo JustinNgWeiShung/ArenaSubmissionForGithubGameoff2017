@@ -234,7 +234,7 @@ material/material = SubResource( 3 )
 transform/pos = Vector2( 0, 0.188938 )
 texture = ExtResource( 2 )
 region = true
-region_rect = Rect2( 0, 0, 64, 64 )
+region_rect = Rect2( 0, 64, 64, 64 )
 
 [node name="groundCollider" type="CollisionShape2D" parent="."]
 
