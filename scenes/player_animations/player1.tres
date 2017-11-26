@@ -6,7 +6,7 @@ length = 0.15
 loop = false
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/path = NodePath("Node2D/hitbox:collision/mask")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -16,7 +16,7 @@ tracks/0/keys = {
 "values": [ 0, 2, 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("Node2D/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -44,13 +44,13 @@ tracks/2/keys = {
 } ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("hitbox:transform/pos")
+tracks/3/path = NodePath("Node2D/hitbox:transform/pos")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
 "times": FloatArray( 0.08 ),
 "transitions": FloatArray( 1 ),
 "update": 0,
-"values": [ Vector2( 27.6748, 10.9502 ) ]
+"values": [ Vector2( 27.2998, 10.9348 ) ]
 }
 

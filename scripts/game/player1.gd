@@ -26,10 +26,21 @@ var animation
 
 var pushbackVector = Vector2(0,0)
 
+var attackHeightToleranceUp = 15
+var attackHeightToleranceDown = 15
+var attackDirection = 0
+
+var sprite
+
 func _ready():
 	groundCollider = get_node("groundCollider")
-	animation = get_node("AnimationPlayer")
+	groundCollider.setSize(30)
 	
+	animation = get_node("AnimationPlayer")
+	sprite = get_node("Node2D/Sprite")
+	
+	var p2 = get_parent().get_node("Player2")
+	print(p2.get_name())
 	if(GLOBAL_SYS.p2ModeEnable):
 		if(GLOBAL_SYS.p1_char == GLOBAL_SYS.P1CHAR):
 			state = PlayerStateClass.new(self)
@@ -39,7 +50,7 @@ func _ready():
 		if(GLOBAL_SYS.p1_char == GLOBAL_SYS.P1CHAR):
 			state = PlayerStateClass.new(self)
 		else:
-			state = AIStateClass.new(self)
+			state = AIStateClass.new(self,p2)
 	#state.set_idle()
 	
 	# Called every time the node is added to the scene.
@@ -51,19 +62,26 @@ func _ready():
 func _process(delta):
 	
 	
-	var parentTest = get_parent().get_parent()
+	_clampInView()
+	
+	if(life<=0):
+		_KO()
+		_handleKO(delta)
+		return
+	
+	var parentTest = get_parent()
 	if(parentTest.get_name() == "World"):
-		if(parentTest.endRound):
+		if(parentTest.endRound||parentTest.gameIsOver):
 			return
 	
-	_clampInView()
+	state.aiUpdate(delta)
+	
 	if(_handleHurt(delta)):
 		return
 	
 	_handleWalk(delta)
 	_handleJump(delta)
 	_handleAttack(delta)
-	
 	_handleZIndex()
 	
 	pass
@@ -77,18 +95,29 @@ func _clampInView():
 
 func _KO():
 	life=0
-	state.charState.setKO()
+	state.charState.ko()
+	return
+
+func _handleKO(delta):
+	if(state.charState.isKO()):
+		var currPos = get_pos()
+		set_z(0)
+		if(attackDirection>0):
+			set_pos(Vector2(currPos.x+1,currPos.y))
+			set_rot(get_rot()+1)
+		else:
+			set_pos(Vector2(currPos.x-1,currPos.y))
+			set_rot(get_rot()+1)
 	return
 
 func _handleZIndex():
-	set_z(get_pos().y+height)
+	if(state.checkHurt()):
+		return
+	else:
+		if(state.charState.isIdle()||state.charState.isWalking()|| state.charState.isJumping()):
+			set_z(get_pos().y+get_item_rect().size.y+height)
 	
 func _handleHurt(delta):
-	
-	if(life<0):
-		_KO()
-		return
-	
 	if(state.checkHurt()):
 		if(currentDamageRecoverFrame>0):
 			damageTimer+= delta
@@ -103,6 +132,7 @@ func _handleHurt(delta):
 func _reset_damage_recovery_counter():
 	currentDamageRecoverFrame=0
 	damageTimer=0
+	set_z(get_pos().y+(get_item_rect().size.y)+height)
 	state.charState.idle()
 			
 func _handleWalk(delta):
@@ -155,6 +185,12 @@ func _handleJump(delta):
 		var groundColliderPos = Vector2(groundCollider.get_pos().x,groundCollider.get_pos().y)
 		groundColliderPos.y -= jumpPowerDelta / get_scale().y
 		groundCollider.set_pos(groundColliderPos)
+		var shadowSize = 30-height
+		if(shadowSize <0):
+			shadowSize=20
+		groundCollider.setSize(shadowSize)
+		groundCollider.setOffsetY(-height)
+		groundCollider.update()
 		#jumping power needs to decay over time
 		
 		
@@ -209,17 +245,28 @@ func getLife():
 func restart():
 	life =100
 
+func getPosY():
+	return get_pos().y
+
 func _on_hurtbox_area_enter( area ):
 	print("something enter p1 hurtbox")
-	print(area.get_name())
-	var test=area.get_parent()
-	print(test.get_name())
-	state.charState.hurt()
+	#print(area.get_name())
+	#var test=area.get_parent()
+	#print(test.get_name())
+	#state.charState.hurt()
 	pass # replace with function body\
 
 func _on_hitbox_area_enter( area ):
 	print("something enter p1 hitbox")
-	var test = area.get_parent()
-	test.damage(5,5)
+	var test = area.get_parent().get_parent()
+	var testY = test.getPosY()
+	var ourY = get_pos().y
+	if(testY < ourY+attackHeightToleranceUp+height && testY > ourY-attackHeightToleranceDown+height ):
+		attackDirection = get_pos().x - test.get_pos().x
+		test.attackDirection = -attackDirection
+		test.state.charState.hurt()
+		test.damage(5,5)
+		set_z(testY+test.get_item_rect().size.y+test.height+50)
+		
 	# Enemy enter hitbox
 	pass # replace with function body

@@ -16,6 +16,7 @@ var p1WinRound=0
 var p2WinRound=0
 var p2ModeEnable=false
 var matchWonBy="none"
+var gameTransitionNumber=0
 
 func _ready():
 	currentScene = get_tree().get_root().get_child(get_tree().get_root().get_child_count()-1);

@@ -5,7 +5,6 @@ var p1BarNode
 var p2BarNode
 var timer = 0.0
 var ceilNode
-var IO_SCRIPT = load("res://scripts/game/io_handler.gd")
 var game_input
 var STATE_HANDLER_SCRIPT = load("res://scripts/game/game_state_handler.gd")
 var game_state
@@ -23,28 +22,35 @@ var debugLabel
 var debugLabel2
 var debugLabel3
 var debugLabel4
+var debugLabel5
+var debugLabel6
 
 var endRound = false
 var gameOver=false
 var gameOverPanel
+var gameTimeDelay=0
+
+var gameIsOver=false
+
 
 func _ready():
-	debugLabel = get_node("Debug")
-	debugLabel2 = get_node("Debug2")
-	debugLabel3 = get_node("Debug3")
-	debugLabel4 = get_node("Debug4")
-	
-	#debugLabel.hide()
-	#debugLabel2.hide()
-	#debugLabel3.hide()
-	#debugLabel4.hide()
+	GLOBAL_SYS.gameTransitionNumber+=1
+	debugLabel = get_node("DebugControl/Debug")
+	debugLabel2 = get_node("DebugControl/Debug2")
+	debugLabel3 = get_node("DebugControl/Debug3")
+	debugLabel4 = get_node("DebugControl/Debug4")
+	debugLabel5 = get_node("DebugControl/Debug5")
+	debugLabel6 = get_node("DebugControl/Debug6")
+	debugLabel.hide()
+	debugLabel2.hide()
+	debugLabel3.hide()
+	debugLabel4.hide()
+	debugLabel5.hide()
+	debugLabel6.hide()
 	
 	gameOverPanel = get_node("gameoverpanel")
 	
 	roundTimer = get_node("clock/VBoxContainer/timeLabel")
-	
-	game_input = IO_SCRIPT.new()
-	game_input.test()
 	
 	game_state = STATE_HANDLER_SCRIPT.new()
 	game_state.test()
@@ -83,39 +89,59 @@ func _debug(delta):
 		debugLabel.set_text(str(p1.get_pos().x,",",p1.get_pos().y,",",p1.height,",",p1.currentJumpPower))
 		#debugLabel2.set_text(p1.state.charState.check())
 		#debugLabel3.set_text(p2.state.check())
-		debugLabel2.set_text(str(p1.get_z()))
+		
+		var testY = p1.get_pos().y
+		var testY2 = p2.get_pos().y
+		
+		debugLabel2.set_text(str(testY,":",p1.get_z(),":",p1.state.charState.get_state_name(),":",p1.state.checkHurt()))
+		debugLabel5.set_text(str(p1.damageTimer,":",p1.currentDamageRecoverFrame))
 		
 		debugLabel3.set_text(str(p2.get_pos().x,",",p2.get_pos().y,",",p2.height,",",p2.currentJumpPower))
-		debugLabel4.set_text(str(p2.get_z()))
+		debugLabel4.set_text(str(testY2,":",p2.get_z(),":",p2.state.charState.get_state_name(),":",p2.state.checkHurt()))
+		debugLabel6.set_text(str(p2.damageTimer,":",p2.currentDamageRecoverFrame))
 
-func _checkGameOver():
-	if(GLOBAL_SYS.p1WinRound>=2 && GLOBAL_SYS.p2WinRound>=2):
-		gameOverPanel.show()
-		GLOBAL_SYS.matchWonBy="draw"
-		TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME)
-		GLOBAL_SYS.p1WinRound=0
-		GLOBAL_SYS.p2WinRound=0
-		gameOver=true
-	elif(GLOBAL_SYS.p1WinRound>=2):
-		gameOverPanel.show()
-		GLOBAL_SYS.matchWonBy="p1"
-		TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME)
-		GLOBAL_SYS.p1WinRound=0
-		GLOBAL_SYS.p2WinRound=0
-		gameOver=true
-	elif(GLOBAL_SYS.p2WinRound>=2):
-		gameOverPanel.show()
-		GLOBAL_SYS.matchWonBy="p2"
-		TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME)
-		GLOBAL_SYS.p1WinRound=0
-		GLOBAL_SYS.p2WinRound=0
-		gameOver=true
+func _checkGameOver(delta):
+	if(GLOBAL_SYS.p1WinRound>=2 || GLOBAL_SYS.p2WinRound>=2):
+		if(!gameIsOver):
+			if(GLOBAL_SYS.p1WinRound>=2 && GLOBAL_SYS.p2WinRound>=2):
+				GLOBAL_SYS.matchWonBy="draw"
+				if(GLOBAL_SYS.gameTransitionNumber>2):
+					gameOverPanel.show()
+			elif(GLOBAL_SYS.p1WinRound>=2):
+				GLOBAL_SYS.matchWonBy="p1"
+				if(GLOBAL_SYS.gameTransitionNumber>2):
+					gameOverPanel.show()
+			elif(GLOBAL_SYS.p2WinRound>=2):
+				GLOBAL_SYS.matchWonBy="p2"
+				if(GLOBAL_SYS.gameTransitionNumber>2):
+					gameOverPanel.show()
+			gameTimeDelay=-0.8
+		gameIsOver=true
+	
+	if(gameIsOver):
+		gameTimeDelay+=delta
+	
+	if(gameTimeDelay>=0):
+		if(GLOBAL_SYS.p1WinRound>=2 && GLOBAL_SYS.p2WinRound>=2):
+			TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME)
+			GLOBAL_SYS.p1WinRound=0
+			GLOBAL_SYS.p2WinRound=0
+			gameOver=true
+		elif(GLOBAL_SYS.p1WinRound>=2):
+			TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME)
+			GLOBAL_SYS.p1WinRound=0
+			GLOBAL_SYS.p2WinRound=0
+			gameOver=true
+		elif(GLOBAL_SYS.p2WinRound>=2):
+			TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME)
+			GLOBAL_SYS.p1WinRound=0
+			GLOBAL_SYS.p2WinRound=0
+			gameOver=true
 	
 func _process(delta):
+	
 	if(gameOver):
 		return
-		
-	gameOverPanel.hide()
 	if(endRound):
 		return
 		
@@ -138,8 +164,9 @@ func _process(delta):
 	GLOBAL_INPUT.setDebug()
 	GLOBAL_INPUT.quitGame()
 	
-	_checkGameOver()
-
+	_checkGameOver(delta)
+	if(!gameIsOver && GLOBAL_SYS.gameTransitionNumber<2):
+		gameOverPanel.hide()
 	pass
 	
 func _roundCounterSet(delta):
@@ -194,6 +221,7 @@ func _handle_round_end():
 	var p2Life = p2.getLife()	
 	if(p1Life == p2Life):
 		#declare draw
+		
 		_handle_round_draw()
 	elif(p1Life>0 && p2Life <=0):
 		#p1 won
@@ -220,6 +248,7 @@ func _handle_round_draw():
 	pass
 
 func _restart():
+	
 	TRANSITION.fade_to(GLOBAL_SYS.GAME_SCENE_NAME)
 	endRound=true
 

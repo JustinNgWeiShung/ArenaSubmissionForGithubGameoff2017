@@ -1,14 +1,15 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://scripts/game/player1.gd" type="Script" id=1]
-[ext_resource path="res://res/Game Maker Beat Em Up - Part 1 Assets/p1.png" type="Texture" id=2]
-[ext_resource path="res://scenes/player_animations/player1.tres" type="Animation" id=3]
-[ext_resource path="res://scenes/recolorshader.tscn" type="PackedScene" id=4]
+[ext_resource path="res://res/char1/char1.png" type="Texture" id=2]
+[ext_resource path="res://scenes/recolorshader.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/game/shadow.gd" type="Script" id=4]
+[ext_resource path="res://scenes/player_animations/player1.tres" type="Animation" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 30, 3 )
+extents = Vector2( 78.2625, 3 )
 
 [sub_resource type="CanvasItemShader" id=2]
 
@@ -46,14 +47,23 @@ shader_param/input_color = Color( 0.203922, 0.2, 0.231373, 0.992157 )
 shader_param/range = 0.8
 shader_param/output_color = Color( 0.178711, 0.267136, 0.476563, 1 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="RectangleShape2D" id=4]
 
-resource/name = "hurt"
+custom_solver_bias = 0.0
+extents = Vector2( 9.66667, 10.6667 )
+
+[sub_resource type="RectangleShape2D" id=5]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="Animation" id=6]
+
 length = 0.01
 loop = false
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/path = NodePath("Node2D/hitbox:collision/mask")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -63,7 +73,7 @@ tracks/0/keys = {
 "values": [ 0, 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("Node2D/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -73,14 +83,13 @@ tracks/1/keys = {
 "values": [ Rect2( 64, 0, 64, 64 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 
-resource/name = "idle"
 length = 0.01
 loop = false
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/path = NodePath("Node2D/hitbox:collision/mask")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -90,7 +99,7 @@ tracks/0/keys = {
 "values": [ 0, 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("Node2D/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -100,13 +109,13 @@ tracks/1/keys = {
 "values": [ Rect2( 0, 0, 64, 64 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 
 length = 0.01
 loop = false
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/path = NodePath("Node2D/hitbox:collision/mask")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -116,7 +125,7 @@ tracks/0/keys = {
 "values": [ 0, 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("Node2D/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -126,13 +135,13 @@ tracks/1/keys = {
 "values": [ Rect2( 0, 0, 64, 64 ), Rect2( 64, 128, 64, 64 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 
 length = 0.09
 loop = false
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/path = NodePath("Node2D/hitbox:collision/mask")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -160,7 +169,7 @@ tracks/1/keys = {
 } ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:region_rect")
+tracks/2/path = NodePath("Node2D/Sprite:region_rect")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -170,7 +179,7 @@ tracks/2/keys = {
 "values": [ Rect2( 0, 256, 64, 64 ), Rect2( 64, 256, 64, 64 ), Rect2( 0, 256, 64, 64 ), Rect2( 0, 256, 64, 64 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("hitbox:transform/pos")
+tracks/3/path = NodePath("Node2D/hitbox:transform/pos")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
@@ -180,13 +189,13 @@ tracks/3/keys = {
 "values": [ Vector2( 27.1847, 17.8111 ), Vector2( 22.0834, 16.6775 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 
 length = 0.25
 loop = true
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("hitbox:collision/mask")
+tracks/0/path = NodePath("Node2D/hitbox:collision/mask")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -196,7 +205,7 @@ tracks/0/keys = {
 "values": [ 0, 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:region_rect")
+tracks/1/path = NodePath("Node2D/Sprite:region_rect")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -206,71 +215,41 @@ tracks/1/keys = {
 "values": [ Rect2( 0, 64, 64, 64 ), Rect2( 64, 64, 64, 64 ), Rect2( 128, 64, 64, 64 ), Rect2( 192, 64, 64, 64 ), Rect2( 128, 64, 64, 64 ), Rect2( 0, 64, 64, 64 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=9]
-
-custom_solver_bias = 0.0
-extents = Vector2( 9.66667, 10.6667 )
-
-[sub_resource type="RectangleShape2D" id=10]
-
-custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
-
 [node name="Player1" type="KinematicBody2D"]
 
-transform/scale = Vector2( 3, 3 )
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 0.220641, 0, 0, 0.441147, -0.779312, 31.5967 )
+shapes/0/transform = Matrix32( 0.76, 0, 0, 0.5, -2.77931, 30.5967 )
 shapes/0/trigger = false
 collision/layers = 8
 collision/mask = 4
 collision/margin = 0.08
 script/script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+
+transform/pos = Vector2( 0, -32 )
+transform/scale = Vector2( 2, 2 )
+
+[node name="Sprite" type="Sprite" parent="Node2D"]
 
 material/material = SubResource( 3 )
 transform/pos = Vector2( 0, 0.188938 )
 texture = ExtResource( 2 )
 region = true
-region_rect = Rect2( 0, 64, 64, 64 )
+region_rect = Rect2( 0, 192, 64, 64 )
 
-[node name="groundCollider" type="CollisionShape2D" parent="."]
-
-transform/pos = Vector2( -0.779312, 31.5967 )
-transform/scale = Vector2( 0.220641, 0.441147 )
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-
-playback/process_mode = 0
-playback/default_blend_time = 0.0
-root/root = NodePath("..")
-anims/attack = ExtResource( 3 )
-anims/hurt = SubResource( 4 )
-anims/idle = SubResource( 5 )
-anims/jump = SubResource( 6 )
-anims/jump_attack = SubResource( 7 )
-anims/walk = SubResource( 8 )
-playback/active = true
-playback/speed = 1.0
-blend_times = [  ]
-autoplay = ""
-
-[node name="recolorshader" parent="." instance=ExtResource( 4 )]
+[node name="recolorshader" parent="Node2D" instance=ExtResource( 3 )]
 
 editor/display_folded = true
 visibility/visible = false
 
-[node name="hurtbox" type="Area2D" parent="."]
+[node name="hurtbox" type="Area2D" parent="Node2D"]
 
 transform/pos = Vector2( -0.110924, 12.4998 )
 transform/scale = Vector2( 0.242074, 0.510717 )
 input/pickable = true
-shapes/0/shape = SubResource( 9 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 3, 0, 0, 3, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -282,19 +261,19 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="rectangle" type="CollisionShape2D" parent="hurtbox"]
+[node name="rectangle" type="CollisionShape2D" parent="Node2D/hurtbox"]
 
 transform/scale = Vector2( 3, 3 )
-shape = SubResource( 9 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox" type="Area2D" parent="Node2D"]
 
-transform/pos = Vector2( 27.6748, 10.9502 )
-transform/scale = Vector2( 0.1, 0.1 )
+transform/pos = Vector2( 27.2998, 10.9348 )
+transform/scale = Vector2( 0.110135, 0.094055 )
 input/pickable = true
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 3, 0, 0, 3, 0, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -302,21 +281,44 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 collision/layers = 0
-collision/mask = 0
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="rectangle" type="CollisionShape2D" parent="hitbox"]
+[node name="rectangle 2" type="CollisionShape2D" parent="Node2D/hitbox"]
 
 transform/scale = Vector2( 3, 3 )
-shape = SubResource( 10 )
+shape = SubResource( 5 )
 trigger = false
 _update_shape_index = 0
 
-[connection signal="area_enter" from="hurtbox" to="." method="_on_hurtbox_area_enter"]
+[node name="groundCollider" type="CollisionShape2D" parent="."]
 
-[connection signal="area_enter" from="hitbox" to="." method="_on_hitbox_area_enter"]
+transform/pos = Vector2( -2.77931, 30.5967 )
+transform/scale = Vector2( 0.76, 0.5 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+script/script = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 0
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/attack = ExtResource( 5 )
+anims/hurt = SubResource( 6 )
+anims/idle = SubResource( 7 )
+anims/jump = SubResource( 8 )
+anims/jump_attack = SubResource( 9 )
+anims/walk = SubResource( 10 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[connection signal="area_enter" from="Node2D/hurtbox" to="." method="_on_hurtbox_area_enter"]
+
+[connection signal="area_enter" from="Node2D/hitbox" to="." method="_on_hitbox_area_enter"]
 
 
-[editable path="recolorshader"]

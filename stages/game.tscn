@@ -2,14 +2,14 @@
 
 [ext_resource path="res://scripts/game/game.gd" type="Script" id=1]
 [ext_resource path="res://res/background.jpg" type="Texture" id=2]
-[ext_resource path="res://res/bottom.png" type="Texture" id=3]
-[ext_resource path="res://res/top.png" type="Texture" id=4]
-[ext_resource path="res://res/over.png" type="Texture" id=5]
-[ext_resource path="res://scenes/player1.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/player2.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/wall.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/overlay.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/gameover_panel.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/gameover_panel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://res/bottom.png" type="Texture" id=4]
+[ext_resource path="res://res/top.png" type="Texture" id=5]
+[ext_resource path="res://res/over.png" type="Texture" id=6]
+[ext_resource path="res://scenes/player1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/player2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/wall.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/overlay.tscn" type="PackedScene" id=10]
 
 [node name="World" type="Control"]
 
@@ -29,6 +29,14 @@ transform/pos = Vector2( -65, -86 )
 transform/scale = Vector2( 1.16667, 1.16667 )
 texture = ExtResource( 2 )
 centered = false
+
+[node name="gameoverpanel" parent="." instance=ExtResource( 3 )]
+
+visibility/visible = false
+margin/left = 240.0
+margin/top = 120.0
+margin/right = 750.0
+margin/bottom = 440.0
 
 [node name="p1RoundsLeft" type="Label" parent="."]
 
@@ -139,9 +147,9 @@ range/page = 0.0
 range/value = 100.0
 range/exp_edit = false
 range/rounded = false
-texture/under = ExtResource( 3 )
-texture/over = ExtResource( 4 )
-texture/progress = ExtResource( 5 )
+texture/under = ExtResource( 4 )
+texture/over = ExtResource( 5 )
+texture/progress = ExtResource( 6 )
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
 
@@ -190,9 +198,9 @@ range/page = 0.0
 range/value = 100.0
 range/exp_edit = false
 range/rounded = false
-texture/under = ExtResource( 3 )
-texture/over = ExtResource( 4 )
-texture/progress = ExtResource( 5 )
+texture/under = ExtResource( 4 )
+texture/over = ExtResource( 5 )
+texture/progress = ExtResource( 6 )
 mode = 1
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
@@ -213,46 +221,57 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Player1" parent="." instance=ExtResource( 6 )]
+[node name="Player1" parent="." instance=ExtResource( 7 )]
 
-transform/pos = Vector2( 130, 450 )
-transform/scale = Vector2( 2, 2 )
+transform/pos = Vector2( 130, 449 )
 
-[node name="Player2" parent="." instance=ExtResource( 7 )]
+[node name="Player2" parent="." instance=ExtResource( 8 )]
 
-transform/pos = Vector2( 850, 420 )
-transform/scale = Vector2( 3, 3 )
+transform/pos = Vector2( 880, 460 )
+transform/scale = Vector2( -1, 1 )
 
-[node name="floor" parent="." instance=ExtResource( 8 )]
+[node name="floor" parent="." instance=ExtResource( 9 )]
 
 transform/pos = Vector2( 485, 528 )
 transform/scale = Vector2( 16.4063, 0.25 )
 collision/mask = 8
 
-[node name="wallLeft" parent="." instance=ExtResource( 8 )]
+[node name="wallLeft" parent="." instance=ExtResource( 9 )]
 
 transform/pos = Vector2( 0, 270 )
 transform/scale = Vector2( 0.3, 9 )
 collision/mask = 8
 
-[node name="wallRight" parent="." instance=ExtResource( 8 )]
+[node name="wallRight" parent="." instance=ExtResource( 9 )]
 
 transform/pos = Vector2( 960, 270 )
 transform/scale = Vector2( 0.3, 9 )
 collision/mask = 8
 
-[node name="ceil1" parent="." instance=ExtResource( 8 )]
+[node name="ceil1" parent="." instance=ExtResource( 9 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 480, 300 )
 transform/scale = Vector2( 16, 1 )
 collision/mask = 8
 
-[node name="overlay" parent="." instance=ExtResource( 9 )]
+[node name="overlay" parent="." instance=ExtResource( 10 )]
 
 visibility/visible = false
 
-[node name="Debug" type="Label" parent="."]
+[node name="DebugControl" type="Control" parent="."]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 40.0
+
+[node name="Debug" type="Label" parent="DebugControl"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -267,7 +286,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Debug2" type="Label" parent="."]
+[node name="Debug2" type="Label" parent="DebugControl"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -282,7 +301,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Debug3" type="Label" parent="."]
+[node name="Debug3" type="Label" parent="DebugControl"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -297,7 +316,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Debug4" type="Label" parent="."]
+[node name="Debug4" type="Label" parent="DebugControl"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -305,19 +324,41 @@ size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 570.0
 margin/top = 110.0
-margin/right = 610.0
+margin/right = 653.0
 margin/bottom = 124.0
 text = "DebugLabel4"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="gameoverpanel" parent="." instance=ExtResource( 10 )]
+[node name="Debug5" type="Label" parent="DebugControl"]
 
-visibility/visible = false
-margin/left = 240.0
-margin/top = 120.0
-margin/right = 750.0
-margin/bottom = 440.0
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 71.0
+margin/top = 131.0
+margin/right = 111.0
+margin/bottom = 145.0
+text = "DebugLabel5"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Debug6" type="Label" parent="DebugControl"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 570.0
+margin/top = 130.0
+margin/right = 610.0
+margin/bottom = 144.0
+text = "DebugLabel6"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 

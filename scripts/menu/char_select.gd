@@ -11,6 +11,7 @@ var p2ModeIndicator
 var transitionLock=false
 
 func _ready():
+	GLOBAL_SYS.gameTransitionNumber=0
 	p1SelectionBox = get_node("p1Selection")
 	
 	p2ModeIndicator = get_node("p2ModeIndicator")

@@ -112,13 +112,13 @@ func check_animation_playing(name):
 	else:
 		return false
 
-func get_state():
-	return currentState
-		
-func check():
+func get_state_name():
 	for i in STATES:
 		if(STATES[i] == currentState):
 			return i
+
+func get_state():
+	return currentState
 
 func _ready():
 	# Called every time the node is added to the scene.

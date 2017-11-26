@@ -9,6 +9,9 @@ func _init(player):
 	self.player = player
 	pass
 
+func aiUpdate(delta):
+	
+	pass
 
 ##### INPUT CHECKS #####
 func checkAttack():
@@ -96,7 +99,7 @@ func play_jump():
 	
 func play_hurt():
 	if(player.animation.is_playing()):
-		if(charState.check_animation_playing("walk") || charState.check_animation_playing("idle")):
+		if(charState.check_animation_playing("walk") || charState.check_animation_playing("idle") || charState.isAirborne()):
 			player.animation.play("hurt")
 		return
 	else:
