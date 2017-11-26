@@ -27,6 +27,8 @@ var attackHeightToleranceUp = 20
 var attackHeightToleranceDown = 20
 var attackDirection = 0
 
+var playKOSound=false
+
 var sprite
 
 func _ready():
@@ -88,9 +90,15 @@ func _clampInView():
 	var pos = get_pos()
 	pos.x = clamp(pos.x,0+16, view_size.width-16)
 
+
+
 func _KO():
 	life=0
 	state.charState.ko()
+	if(!playKOSound):
+		var soundSample=get_node("SamplePlayer")
+		soundSample.play("explode")
+		playKOSound=true
 	return
 	
 func _handleKO(delta):
@@ -125,6 +133,10 @@ func _handleHurt(delta):
 		return false
 		
 	return false
+
+func attackSound():
+	var soundSample=get_node("SamplePlayer")
+	soundSample.play("hitheavy")
 
 func _reset_damage_recovery_counter():
 	currentDamageRecoverFrame=0
@@ -172,7 +184,7 @@ func _handleJump(delta):
 			#jump power needs to decay
 		#	currentJumpPower = currentJumpPower/1.5
 			
-	if(state.charState.isAirborne()):
+	if(state.charState.isAirborne() || height>0):
 		var gravityPull = gravity*delta#gravity vector
 		currentJumpPower += gravity*delta
 		
@@ -238,6 +250,7 @@ func getLife():
 	
 func restart():
 	life =100
+	playKOSound=false
 
 func getPosY():
 	return get_pos().y
@@ -251,13 +264,13 @@ func _on_hitbox_area_enter( area ):
 	print("something enter p2 hitbox")
 	var test = area.get_parent().get_parent()
 	var testY = test.getPosY()
-	var ourY = get_pos().y	
+	var ourY = get_pos().y
 	if(testY < ourY+attackHeightToleranceUp+height && testY > ourY-attackHeightToleranceDown+height ):
 		attackDirection = get_pos().x - test.get_pos().x
 		test.attackDirection = -attackDirection
 		
 		test.state.charState.hurt()
-		test.damage(10,5)
+		test.damage(15,5)
 		set_z(testY+test.get_item_rect().size.y+test.height+50)
 	
 	pass # replace with function body

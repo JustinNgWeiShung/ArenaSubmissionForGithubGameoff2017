@@ -64,12 +64,15 @@ func _playerInputCheck():
 	if(p1SelectedPortrait==p1Portrait):
 		if((Input.is_action_pressed("P1_MOVE_RIGHT") || Input.is_action_pressed("P1_MOVE_LEFT")) && !actionLock):
 			_setSelectionBoxPos("p1",p2Portrait)
+			get_node("SamplePlayer").play("select")
 	else:
 		if((Input.is_action_pressed("P1_MOVE_RIGHT") || Input.is_action_pressed("P1_MOVE_LEFT")) && !actionLock):
 			_setSelectionBoxPos("p1",p1Portrait)
+			get_node("SamplePlayer").play("select")
 	
 	if((Input.is_action_pressed("P1_ATTACK") || Input.is_action_pressed("P1_START") || Input.is_action_pressed("P1_JUMP"))  && !selectLock):
 		p1SelectedPortrait.pressed()
+		get_node("SamplePlayer").play("select")
 		transitionLock=true
 		
 	if(Input.is_action_pressed("P2_START") && !p2ModeLock):

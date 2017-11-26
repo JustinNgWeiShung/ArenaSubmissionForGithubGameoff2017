@@ -19,7 +19,7 @@ var jumpLockToEnd=false
 var jumpPower = -400 
 var maxJumpPower = -1000
 var gravity = 3500
-var walkSpeed = 200
+var walkSpeed = 300
 var runSpeed = 300
 var groundCollider
 var animation
@@ -30,8 +30,10 @@ var attackHeightToleranceUp = 15
 var attackHeightToleranceDown = 15
 var attackDirection = 0
 
-var sprite
+var playKOSound=false
 
+var sprite
+var hitEffect
 func _ready():
 	groundCollider = get_node("groundCollider")
 	groundCollider.setSize(30)
@@ -96,6 +98,10 @@ func _clampInView():
 func _KO():
 	life=0
 	state.charState.ko()
+	if(!playKOSound):
+		var soundSample=get_node("SamplePlayer")
+		soundSample.play("explode")
+		playKOSound=true
 	return
 
 func _handleKO(delta):
@@ -128,6 +134,10 @@ func _handleHurt(delta):
 		return false
 		
 	return false
+
+func attackSound():
+	var soundSample=get_node("SamplePlayer")
+	soundSample.play("swoosh")
 
 func _reset_damage_recovery_counter():
 	currentDamageRecoverFrame=0
@@ -175,7 +185,7 @@ func _handleJump(delta):
 			#jump power needs to decay
 		#	currentJumpPower = currentJumpPower/1.5
 			
-	if(state.charState.isAirborne()):
+	if(state.charState.isAirborne() || height>0):
 		var gravityPull = gravity*delta#gravity vector
 		currentJumpPower += gravity*delta
 		
@@ -244,6 +254,7 @@ func getLife():
 
 func restart():
 	life =100
+	playKOSound=false
 
 func getPosY():
 	return get_pos().y

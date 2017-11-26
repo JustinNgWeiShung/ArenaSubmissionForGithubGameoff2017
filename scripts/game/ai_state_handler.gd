@@ -101,8 +101,12 @@ func decideWalk():
 	var diffX= pos2.x-pos.x
 	var diffY= pos2.y-pos.y
 	var diffVector = Vector2(diffX,diffY)
+	var oppVector = Vector2(-diffX,-diffY)
 	diffVector = diffVector.normalized()
-	direction = diffVector
+	if(abs(diffX) > 30 || abs(diffY) > 10):
+		direction = diffVector
+	else:
+		direction = oppVector
 	return direction
 	
 	pass

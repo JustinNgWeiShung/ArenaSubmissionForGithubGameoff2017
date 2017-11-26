@@ -27,6 +27,7 @@ func _process(delta):
 	_effectCheck()
 	
 	if(Input.is_action_pressed("P1_START") || Input.is_action_pressed("P1_ATTACK")|| Input.is_action_pressed("P1_JUMP")):
+		get_node("SamplePlayer").play("select")
 		TRANSITION.fade_to(GLOBAL_SYS.CHAR_SELECT_SCENE_NAME);
 		transitionLock=true;
 		
