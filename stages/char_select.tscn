@@ -172,7 +172,6 @@ max_lines_visible = -1
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -193,9 +192,9 @@ focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 13.0
-margin/top = 8.0
+margin/top = 0.0
 margin/right = 276.0
-margin/bottom = 319.0
+margin/bottom = 328.0
 custom_constants/separation = 10
 alignment = 0
 
@@ -305,7 +304,7 @@ size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 161.0
 margin/right = 263.0
-margin/bottom = 311.0
+margin/bottom = 328.0
 text = "P1/P2 Controls:
 w / up / dpad up: Move/Walk UP 
 s / down / dpad down: Move/Walk DOWN
@@ -314,7 +313,8 @@ d / right / dpad right: Move/Walk RIGHT
 space / enter / Controller Start : start
 t / numpad 7 / Controller X: attack 
 y / numpad 8 / Controller A : jump 
-"
+
+Shift+Q to Exit Game"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -337,9 +337,9 @@ default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
 
-[connection signal="pressed" from="p1Button" to="p1Button" method="_on_p1Button_pressed"]
-
 [connection signal="pressed" from="p1Button" to="p1Button" method="_on_Button_pressed"]
+
+[connection signal="pressed" from="p1Button" to="p1Button" method="_on_p1Button_pressed"]
 
 [connection signal="pressed" from="p2Button" to="p2Button" method="_on_p2Button_pressed"]
 
