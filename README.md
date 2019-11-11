@@ -14,3 +14,6 @@ This project is my first gamejam project that I completed and also my first time
 
 #Credits
 My sister for helping me with the background
+
+#Notes
+This project was transferred from my old account and I am now keeping this account as my main account
